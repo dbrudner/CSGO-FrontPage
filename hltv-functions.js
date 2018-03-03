@@ -2,7 +2,7 @@ const { HLTV } = require('hltv')
 const _ = require('lodash')
 const moment = require('moment')
 
-const {timeConverstion} = require('./time-conversion')
+const {timeConversion, timeUntil} = require('./time-functions')
 
 module.exports = {
 
@@ -25,13 +25,15 @@ module.exports = {
         })
     },
 
+    // Returns all matches, usually ~250 items
     getAllMatches: function() {
         return HLTV.getMatches().then(res => {
             return res;
         })
     },
 
-    getAllLiveMatches: function() {
+    // Returns all live matches
+    getLiveMatches: function() {
         return HLTV.getMatches().then(res => {
             return res.filter(match => {
                 return match.live
@@ -39,10 +41,21 @@ module.exports = {
         })
     },
 
-    getAllDeadMatches: function() {
+    // Returns all upcoming matches
+    getUpcomingMatches: function() {
         return HLTV.getMatches().then(res => {
             return res.filter(match => {
                 return !match.live
+            })
+        })
+    },
+
+    timeUntilUpcomingMatches: function() {
+        this.getUpcomingMatches().then(res => {
+            return res.map(match => {
+                let newMatch = match
+                newMatch.timeUntil = timeUntil(newMatch.date/1000)
+                return match
             })
         })
     },
@@ -97,7 +110,7 @@ module.exports = {
             console.log('connected')
         }, onLogUpdate: (newData) => {
             console.log("log update")
-            console.log(newData)
+            console.log(newData)``
         },
         onDisconnect: () => {
             console.log('disconnected')

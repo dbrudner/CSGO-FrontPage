@@ -1,9 +1,12 @@
 // Packages
+const moment = require('moment-timezone')
 
 
 // Internal reqs
-const {timeConversion} = require('./time-conversion')
+const time = require('./time-functions')
 const hltv = require('./hltv-functions')
 
-hltv.getAllLiveMatches()
-.then(res => console.log(res))
+// let unix = moment().unix();
+// console.log(unix)
+
+console.log(time.timeUntil())
