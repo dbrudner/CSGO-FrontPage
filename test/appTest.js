@@ -1,15 +1,13 @@
 const assert = require('chai').assert;
-const app = require('../test')
+const time = require ('../time-functions')
+const timeUntil = time.timeUntil
+const moment = require('moment')
 
+describe('time', function() {
 
-describe('app', function() {
-    it('should say hello', function() {
-        assert.equal(sayHi(), 'hi');
+    const oneMin = moment().unix() + 6000
+
+    it('should return 1 minute', function() {
+        assert.equal(time.timeUntil(oneMin), '1.0 Min');
     })
-
-    it('should return a string', function() {
-        let result = sayHi();
-        assert.typeOf(result, 'string');
-    })
-
 })

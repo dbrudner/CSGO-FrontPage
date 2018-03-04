@@ -2,7 +2,7 @@ const { HLTV } = require('hltv')
 const _ = require('lodash')
 const moment = require('moment')
 
-const {timeConversion, timeUntil} = require('./time-functions')
+const time = require('./time-functions')
 
 module.exports = {
 
@@ -51,11 +51,13 @@ module.exports = {
     },
 
     timeUntilUpcomingMatches: function() {
-        this.getUpcomingMatches().then(res => {
+        return this.getUpcomingMatches().then(res => {
             return res.map(match => {
-                let newMatch = match
-                newMatch.timeUntil = timeUntil(newMatch.date/1000)
-                return match
+                if (match.date/1000 > moment().unix()) {
+                    let newMatch = match
+                    newMatch.timeUntil = time.timeUntil(newMatch.date/1000)
+                    return match
+                } else {return null}
             })
         })
     },

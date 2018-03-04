@@ -31,9 +31,7 @@ module.exports = {
 
     timeUntil: function(futureTime) {
         const now = this.getCurrentUnixTime()
-        return now
-
-        const difference = futureTime - now
+        const difference = (futureTime - now) * 1000
         return this.timeConversion(difference)
     }
 }
