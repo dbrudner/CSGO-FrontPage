@@ -118,6 +118,59 @@ module.exports = {
         })
     },
 
+    getAllTeamsForEvents: function() {
+        return this.getAllMatches()
+        .then(res => {
+            let matches = res;
+        
+            events = res.map(match => {
+                return match.event
+            })
+            
+
+            events = _.uniqBy(events, 'id')
+            
+            events.forEach(event => {
+                event.teams = []
+            })
+
+            res.forEach(match => {
+                events.forEach(event => {
+                    if (event.name === match.event.name && !event.teams.includes(match.team1.name)) {
+                        event.teams.push(match.team1.name)
+                    }
+
+                    if (event.name === match.event.name && !event.teams.includes(match.team2.name)) {
+                        event.teams.push(match.team2.name)
+                    }
+                })
+            })
+            events.forEach(event => {
+                _.uniqBy(event, 'teams')
+            })
+            return events
+        })
+    },
+
+    sortEventsByQuality: function(events) {
+        return this.getTopRankings().then(res => {
+            return res
+        }).then(teams => {
+            // events.forEach(event => {
+            //     event.teams.reduce(team => {
+                    
+            //     }, 0)
+            // })
+            return teams
+        })
+    },
+
+    getAllEventTeamsAndSortByQuality: function() {
+        return this.getAllTeamsForEvents().then(res => {
+            return this.sortEventsByQuality(res)
+        })
+    },
+
     getTopRankings: function() {
         return HLTV.getTeamRanking().then(res => {
             const teams = res.map(team => {

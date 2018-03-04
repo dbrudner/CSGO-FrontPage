@@ -6,4 +6,6 @@ const moment = require('moment-timezone')
 const time = require('./time-functions')
 const hltv = require('./hltv-functions')
 
-hltv.getEvents().then((res) => console.log(res))
+hltv.getAllEventTeamsAndSortByQuality().then(res => {
+    console.log(res)
+})
