@@ -6,7 +6,4 @@ const moment = require('moment-timezone')
 const time = require('./time-functions')
 const hltv = require('./hltv-functions')
 
-const times = hltv.timeUntilUpcomingTopMatches()
-.then(res => {
-	console.log(res)
-})
+hltv.getEvents().then((res) => console.log(res))

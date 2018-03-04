@@ -50,6 +50,8 @@ module.exports = {
         })
     },
 
+    // Returns all upcoming matches with time until property
+    // timeUntil = {units of time}
     timeUntilUpcomingMatches: function() {
         return this.getUpcomingMatches().then(res => {
             return res.map(match => {
@@ -63,16 +65,14 @@ module.exports = {
     },
 
     timeUntilUpcomingTopMatches: function() {
-
         return this.getTeamRanking().then(res => {
             return res
         }).then(topTeams => {
             return this.getTopMatches(topTeams)
         })
-
-        
     },
 
+    // Get all matches where at least one team is a top 10 team
     getTopMatches: function(topTeams) {
         return this.getUpcomingMatches().then(res => {
             return res.filter(match => {
@@ -82,38 +82,8 @@ module.exports = {
     },
 
     getMatches: function() {
-        HLTV.getMatches().then(res => {
-
-            let matches = res;      
-        
-            const kat = matches.filter(match => {
-                if (match.event) {
-                    return match.event.id === 3309
-                } else {return}
-            })
-        
-            const liquid = kat.filter(match => {
-                return match.team1.name === 'Liquid' || match.team2.name === 'Liquid'
-            })
-        
-            let unix = liquid[0].date
-            // const time = moment.unix(unix/1000).format("MM/DD/YYYY/HH:MM:SS");
-        
-            const current = Date.now()
-        
-            console.log('unix', unix)
-            console.log(current)
-        
-            const difference = unix - current;
-        
-            console.log(timeConversion(difference))
-            console.log(time)
-        
-        
-            const liveMatches = matches.filter(match => {
-                return match.live
-            })
-            // console.log(liveMatches)
+        return HLTV.getMatches().then(res => {
+            return res
         })
     },
     
@@ -127,22 +97,31 @@ module.exports = {
         HLTV.connectToScorebot({id: matchId, onScoreboardUpdate: (data) => {
             console.log("scoreboard update")
             console.log('scoreupdate', data)
-        }, onConnect: () => {
-            console.log('connected')
-        }, onLogUpdate: (newData) => {
-            console.log("log update")
-            console.log(newData)``
-        },
-        onDisconnect: () => {
-            console.log('disconnected')
-        }	
+            }, onConnect: () => {
+                console.log('connected')
+            }, onLogUpdate: (newData) => {
+                console.log("log update")
+                console.log(newData)``
+            },
+            onDisconnect: () => {
+                console.log('disconnected')
+            }	
         })
-    },
+    }, 
 
-    getTeamRanking: function() {
+    getTopTeams: function() {
         return HLTV.getTeamRanking().then(res => {
             const teams = res.map(team => {
                 return team.team.name
+            })
+            return teams.slice(0, 10)
+        })
+    },
+
+    getTopRankings: function() {
+        return HLTV.getTeamRanking().then(res => {
+            const teams = res.map(team => {
+                return team
             })
             return teams.slice(0, 10)
         })
