@@ -62,6 +62,25 @@ module.exports = {
         })
     },
 
+    timeUntilUpcomingTopMatches: function() {
+
+        return this.getTeamRanking().then(res => {
+            return res
+        }).then(topTeams => {
+            return this.getTopMatches(topTeams)
+        })
+
+        
+    },
+
+    getTopMatches: function(topTeams) {
+        return this.getUpcomingMatches().then(res => {
+            return res.filter(match => {
+                return topTeams.includes(match.team1.name) || topTeams.includes(match.team2.name)
+            })
+        })
+    },
+
     getMatches: function() {
         HLTV.getMatches().then(res => {
 
@@ -125,7 +144,7 @@ module.exports = {
             const teams = res.map(team => {
                 return team.team.name
             })
-            return teams
+            return teams.slice(0, 10)
         })
     }
 }
