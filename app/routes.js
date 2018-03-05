@@ -17,7 +17,7 @@ module.exports = function(app) {
         hltv.nextDayTopMatches().then(matches => {
             res.json(matches)
         })
-    })
+    }),
 
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname+'/react/build/index.html'))
