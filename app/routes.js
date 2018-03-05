@@ -8,8 +8,14 @@ module.exports = function(app) {
 
     app.get('/events', (req, res) => {
         hltv.timeUntilUpcomingMatches()
-        .then(result => {
-            res.json(result)
+        .then(matches => {
+            res.json(matches)
+        })
+    }),
+
+    app.get('/matches/today', (req, res) => {
+        hltv.nextDayMatches().then(matches => {
+            res.json(matches)
         })
     })
 

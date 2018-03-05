@@ -11,7 +11,8 @@ module.exports = {
     // [{name: string, id: number}]
     getEvents: function() {
 
-        return HLTV.getMatches().then((res) => {
+        return HLTV.getMatches()
+        .then((res) => {
 
             let matches = res;
             events = res.map(match => {
@@ -25,14 +26,16 @@ module.exports = {
 
     // Returns all matches, usually ~250 items
     getAllMatches: function() {
-        return HLTV.getMatches().then(res => {
+        return HLTV.getMatches()
+        .then(res => {
             return res;
         })
     },
 
     // Returns all live matches
     getLiveMatches: function() {
-        return HLTV.getMatches().then(res => {
+        return HLTV.getMatches()
+        .then(res => {
             return res.filter(match => {
                 return match.live
             })
@@ -41,7 +44,8 @@ module.exports = {
 
     // Returns all upcoming matches
     getUpcomingMatches: function() {
-        return HLTV.getMatches().then(res => {
+        return HLTV.getMatches()
+        .then(res => {
             return res.filter(match => {
                 return !match.live
             })
@@ -51,7 +55,8 @@ module.exports = {
     // Returns all upcoming matches with time until property
     // timeUntil = {units of time}
     timeUntilUpcomingMatches: function() {
-        return this.getUpcomingMatches().then(res => {
+        return this.getUpcomingMatches()
+        .then(res => {
             return res.map(match => {
                 if (match.date/1000 > moment().unix()) {
                     let newMatch = match
@@ -59,15 +64,18 @@ module.exports = {
                     return match
                 } else {return null}
             })
-        }).then(matches => {
+        })
+        .then(matches => {
             return this.convertMatchTimes(matches)
         })
     },
 
     timeUntilUpcomingTopMatches: function() {
-        return this.getTopRankings().then(res => {
+        return this.getTopRankings()
+        .then(res => {
             return res
-        }).then(topTeams => {
+        })
+        .then(topTeams => {
             return this.getTopMatches(topTeams)
         })
     },
@@ -87,7 +95,8 @@ module.exports = {
     },
 
     getMatches: function() {
-        return HLTV.getMatches().then(matches => {
+        return HLTV.getMatches()
+        .then(matches => {
             return matches
         }).then(matches => {
             return this.convertMatchTimes(matches)
@@ -95,7 +104,8 @@ module.exports = {
     },
     
     getMatchesStats: function(start, end) {
-        return HLTV.getMatchesStats({startDate: start, endDate: end}).then((res) => {
+        return HLTV.getMatchesStats({startDate: start, endDate: end})
+        .then((res) => {
             return res
         })
     },
@@ -160,9 +170,11 @@ module.exports = {
     },
 
     sortEventsByQuality: function(events) {
-        return this.getTopRankings().then(res => {
+        return this.getTopRankings()
+        .then(res => {
             return res
-        }).then(topTeams => {
+        })
+        .then(topTeams => {
             events.forEach(event => {
                 let quality = event.teams.reduce((acc, team) => {
                     let value = 31
@@ -181,7 +193,8 @@ module.exports = {
     },
 
     getAllEventsAndSortByQuality: function() {
-        return this.getAllTeamsForEvents().then(res => {
+        return this.getAllTeamsForEvents()
+        .then(res => {
             return this.sortEventsByQuality(res)
         })
     },
@@ -195,11 +208,40 @@ module.exports = {
     },
 
     getTopRankings: function() {
-        return HLTV.getTeamRanking().then(res => {
+        return HLTV.getTeamRanking()
+        .then(res => {
             const teams = res.map(team => {
                 return team
             })
             return teams.slice(0, 10)
+        })
+    },
+
+    getLiveTopMatches: function() {
+        return this.getLiveMatches()
+        .then(liveMatches => {
+
+        })
+    },
+
+    filterTopMatches: function(matches) {
+        return matches
+    },
+
+    nextDayMatches: function() {
+        return this.getAllMatches()
+        .then(matches => {
+            return matches.filter(match => {
+                if (match.date/1000 - time.getCurrentUnixTime() < (24 * 60 * 60 ) && !match.live) {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }).then(matches => {
+            return this.convertMatchTimes(matches)
+        }).then(matches => {
+            return this.filterTopMatches(matches)
         })
     }
 }

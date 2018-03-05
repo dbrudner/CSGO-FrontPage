@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import TableList from './tableList'
+import axios from 'axios'
 
 class App extends Component {
 
 	componentDidMount() {
 		const date = new Date();
 		const timeZone = date.getTimezoneOffset();
-		console.log(timeZone)
+		axios.get('/matches/today')
+		.then(res => console.log(res))
 	}
 
 
 	render() {
 		return (
 			<div className="App">
-			<TableList/>
+				<TableList/>
 			</div>
 		);
 	}
