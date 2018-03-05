@@ -1,11 +1,20 @@
-// Packages
-const moment = require('moment-timezone')
+
+var express  = require('express');
+var app      = express();
+var port     = process.env.PORT || 5000;
+
+var bodyParser   = require('body-parser');
+var path = require('path')
 
 
-// Internal reqs
-const time = require('./time-functions')
-const hltv = require('./hltv-functions')
+app.use(express.static(path.join(__dirname, 'react/build')));
 
-hltv.getAllEventTeamsAndSortByQuality().then(res => {
-   console.log(res)
-})
+
+
+
+// routes ======================================================================h
+require('./app/routes.js')(app); // load our routes and pass in our app and fully configured passport
+
+// launch ======================================================================
+app.listen(port);
+console.log('Listening on port ' + port);
