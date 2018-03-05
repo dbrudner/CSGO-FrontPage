@@ -7,5 +7,5 @@ const time = require('./time-functions')
 const hltv = require('./hltv-functions')
 
 hltv.getAllEventTeamsAndSortByQuality().then(res => {
-    console.log(res)
+   console.log(res)
 })

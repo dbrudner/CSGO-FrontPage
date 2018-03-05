@@ -155,13 +155,21 @@ module.exports = {
     sortEventsByQuality: function(events) {
         return this.getTopRankings().then(res => {
             return res
-        }).then(teams => {
-            // events.forEach(event => {
-            //     event.teams.reduce(team => {
-                    
-            //     }, 0)
-            // })
-            return teams
+        }).then(topTeams => {
+            events.forEach(event => {
+                let quality = event.teams.reduce((acc, team) => {
+                    let value = 31
+                    topTeams.forEach(topTeam => {
+                        if (topTeam.team.name === team) {
+                            return value = topTeam.place
+                        } 
+                    })
+
+                    return acc + value
+                }, 0)
+                event.quality = quality/event.teams.length
+            })
+            return _.sortBy(events, 'quality')        
         })
     },
 
