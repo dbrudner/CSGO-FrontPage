@@ -14,7 +14,7 @@ module.exports = function(app) {
     }),
 
     app.get('/matches/today', (req, res) => {
-        hltv.nextDayMatches().then(matches => {
+        hltv.nextDayTopMatches().then(matches => {
             res.json(matches)
         })
     })

@@ -225,7 +225,15 @@ module.exports = {
     },
 
     filterTopMatches: function(matches) {
-        return matches
+        return this.getTopRankings()
+        .then(topTeams => {
+            const topTeamsList = topTeams.map(topTeam => topTeam.team.name)
+
+            return matches.filter(match => {
+                console.log(match)
+                return topTeamsList.includes(match.team1.name) || topTeamsList.includes(match.team2.name)
+            })
+        })         
     },
 
     nextDayMatches: function() {
@@ -240,7 +248,12 @@ module.exports = {
             })
         }).then(matches => {
             return this.convertMatchTimes(matches)
-        }).then(matches => {
+        })
+    },
+
+    nextDayTopMatches: function() {
+        return this.nextDayMatches()
+        .then(matches => {
             return this.filterTopMatches(matches)
         })
     }
