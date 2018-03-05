@@ -20,5 +20,10 @@ module.exports = {
         const now = this.getCurrentUnixTime()
         const difference = (futureTime - now) * 1000
         return this.timeConversion(difference)
+    },
+
+    convertUnixToUtc: function(unixTime) {
+        const time = unixTime/1000
+        return moment.unix(time).format("MM/DD/YYYY HH:mm:ss");
     }
 }

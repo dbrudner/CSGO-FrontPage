@@ -14,12 +14,10 @@ module.exports = {
         return HLTV.getMatches().then((res) => {
 
             let matches = res;
-        
             events = res.map(match => {
                 return match.event
             })
             
-
             events = _.uniqBy(events, 'id')                
             return events
         })
@@ -61,11 +59,13 @@ module.exports = {
                     return match
                 } else {return null}
             })
+        }).then(matches => {
+            return this.convertMatchTimes(matches)
         })
     },
 
     timeUntilUpcomingTopMatches: function() {
-        return this.getTeamRanking().then(res => {
+        return this.getTopRankings().then(res => {
             return res
         }).then(topTeams => {
             return this.getTopMatches(topTeams)
@@ -74,16 +74,23 @@ module.exports = {
 
     // Get all matches where at least one team is a top 10 team
     getTopMatches: function(topTeams) {
+
+        const topTeamList = topTeams.map(topTeam => {
+            return topTeam.team.name
+        })
+
         return this.getUpcomingMatches().then(res => {
             return res.filter(match => {
-                return topTeams.includes(match.team1.name) || topTeams.includes(match.team2.name)
+                return topTeamList.includes(match.team1.name) || topTeamList.includes(match.team2.name)
             })
         })
     },
 
     getMatches: function() {
-        return HLTV.getMatches().then(res => {
-            return res
+        return HLTV.getMatches().then(matches => {
+            return matches
+        }).then(matches => {
+            return this.convertMatchTimes(matches)
         })
     },
     
@@ -173,9 +180,17 @@ module.exports = {
         })
     },
 
-    getAllEventTeamsAndSortByQuality: function() {
+    getAllEventsAndSortByQuality: function() {
         return this.getAllTeamsForEvents().then(res => {
             return this.sortEventsByQuality(res)
+        })
+    },
+
+    convertMatchTimes: function(matches) {
+        return matches.map(match => {
+            let newMatch = match
+            newMatch.UTCTime = time.convertUnixToUtc(match.date)
+            return newMatch
         })
     },
 

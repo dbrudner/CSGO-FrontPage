@@ -1,16 +1,15 @@
 // app/routes.js
 const bodyParser = require('body-parser')
 const {hltv, time} = require('../app-functions')
-
+const path = require('path')
 
 
 module.exports = function(app) {
 
-
     app.get('/events', (req, res) => {
-        console.log(time)
-        hltv.getEvents().then(events => {
-            res.json(events)
+        hltv.timeUntilUpcomingMatches()
+        .then(result => {
+            res.json(result)
         })
     })
 
