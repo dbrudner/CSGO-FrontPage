@@ -3,19 +3,16 @@ import MatchesTable from './matches-table'
 
 export default function TableList(props) {
 
-    console.log(props)
 
-    // const renderTables = () => {
-    //     return Object.keys(props).map((object, index) => {
-    //         return (
-    //             <MatchesTable matches={props[object]}/>
-    //         )
-    //     })
-    // }
+    const renderTables = () => {
+        return props.matches.map(matchSet => {
+            return <MatchesTable key={matchSet.name} matches={matchSet} />
+        })
+    }
 
     return (
         <div>
-            {/* {renderTables()} */}
+            {renderTables()}
         </div>
     )
 }

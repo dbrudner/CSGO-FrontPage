@@ -2,10 +2,10 @@ import React from 'react'
 import {Table} from 'react-bootstrap'
 import TableHead from './table-head'
 import TableTitle from './table-title'
+import TableBody from './table-body'
 
 export default function MatchesTable(props) {
 
-    console.log(props.matches)
 
     const tableStyle = {
         width: '90%',
@@ -22,6 +22,7 @@ export default function MatchesTable(props) {
             <TableTitle name={props.matches.name}/>
             <Table striped bordered hover responsive condensed>
                 <TableHead/>
+                <TableBody matches={props.matches}/>
             </Table>
         </div>
     )

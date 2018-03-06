@@ -13,27 +13,23 @@ class App extends Component {
 	}
 
 	getMatches = (route, name) => {
-		console.log('hey')
 		axios.get(route)
 		.then(matches => {
-			console.log(matches)
-			const matchesObject = {name, matches}
+			const matchesObject = {name, matches: matches.data.matches}
 			this.setState({matches: [...this.state.matches, matchesObject]})
-		}, () => console.log(this.state))
+		})
 	}
 
 	componentDidMount() {
 		const date = new Date();
 		const timeZone = date.getTimezoneOffset();
 		
-		// axios.get('/matches/today')
 		this.getMatches('/topmatches/today', "Today's Top Matches")
 		this.getMatches('/topmatches/all', "Upcoming Top Matches")
 	}
 
 
 	render() {
-		console.log(this.state)
 		if (this.state.matches.length) {
 			return (
 				<div className="App">

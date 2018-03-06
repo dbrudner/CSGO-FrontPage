@@ -1,9 +1,15 @@
 import React from 'react'
 
 export default function TableTitle(props) {
+
+    const style = {
+        textAlign: 'left',
+        fontSize: '14px'
+    }
+
     return (
-        <h3>
+        <div style={style}>
             {props.name}
-        </h3>
+        </div>
     )
 }
