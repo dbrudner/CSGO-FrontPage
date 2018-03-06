@@ -5,8 +5,10 @@ import TableTitle from './table-title'
 
 export default function MatchesTable(props) {
 
+    console.log(props.matches)
+
     const tableStyle = {
-        width: '500px',
+        width: '90%',
         textAlign: 'center',
         display: 'block',
         marginRight: 'auto',
@@ -14,9 +16,10 @@ export default function MatchesTable(props) {
         marginTop: '20px'
     }
 
+
     return (
         <div style={tableStyle}>
-            <TableTitle/>
+            <TableTitle name={props.matches.name}/>
             <Table striped bordered hover responsive condensed>
                 <TableHead/>
             </Table>

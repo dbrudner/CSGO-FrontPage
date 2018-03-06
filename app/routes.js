@@ -13,7 +13,7 @@ module.exports = function(app) {
         })
     }),
 
-    app.get('/matches/today', (req, res) => {
+    app.get('/topmatches/today', (req, res) => {
         hltv.nextDayTopMatches().then(matches => {
             const returnObject = {
                 name: 'Top Matches Next 24 Hours',
@@ -22,6 +22,17 @@ module.exports = function(app) {
             res.json(returnObject)
         })
     }),
+
+    app.get('/topmatches/all', (req, res) => {
+        hltv.getUpcomingTopMatches().then(matches => {
+            console.log(matches)
+            const returnObject = {
+                name: 'Top Upcoming Matches',
+                matches
+            }
+            res.json(returnObject)
+        })
+    })
 
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname+'/react/build/index.html'))

@@ -70,13 +70,16 @@ module.exports = {
         })
     },
 
-    timeUntilUpcomingTopMatches: function() {
+    getUpcomingTopMatches: function() {
         return this.getTopRankings()
         .then(res => {
             return res
         })
         .then(topTeams => {
             return this.getTopMatches(topTeams)
+        })
+        .then(topMatches => {
+            return this.convertMatchTimes(topMatches)
         })
     },
 
@@ -89,6 +92,11 @@ module.exports = {
 
         return this.getUpcomingMatches().then(res => {
             return res.filter(match => {
+
+                if (!match.team1 || !match.team2) {
+                    return false
+                }
+
                 return topTeamList.includes(match.team1.name) || topTeamList.includes(match.team2.name)
             })
         })
@@ -112,16 +120,10 @@ module.exports = {
 
     connectToScorebot: function(matchId) {
         HLTV.connectToScorebot({id: matchId, onScoreboardUpdate: (data) => {
-            console.log("scoreboard update")
-            console.log('scoreupdate', data)
             }, onConnect: () => {
-                console.log('connected')
             }, onLogUpdate: (newData) => {
-                console.log("log update")
-                console.log(newData)``
             },
             onDisconnect: () => {
-                console.log('disconnected')
             }	
         })
     }, 
@@ -230,7 +232,6 @@ module.exports = {
             const topTeamsList = topTeams.map(topTeam => topTeam.team.name)
 
             return matches.filter(match => {
-                console.log(match)
                 return topTeamsList.includes(match.team1.name) || topTeamsList.includes(match.team2.name)
             })
         })         
