@@ -17,10 +17,10 @@ export default function MatchesTable(props) {
 
     return (
         <div style={tableStyle}>
-            <TableTitle name={props.matches.name}/>
+            <TableTitle name={props.matches[0].name}/>
             <Table striped bordered hover responsive condensed>
                 <TableHead/>
-                <TableBody matches={props.matches}/>
+                <TableBody matches={props.matches[0].matches}/>
             </Table>
         </div>
     )

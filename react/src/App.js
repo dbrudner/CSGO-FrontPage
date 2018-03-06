@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import TableList from './tableList'
+import SelectTable from './select-table'
 import axios from 'axios'
+import MatchesTable from './matches-table'
 
 class App extends Component {
 
@@ -8,7 +10,8 @@ class App extends Component {
 		super(props)
 
 		this.state = {
-			matches: []
+			matches: [],
+			selectedMatches: []
 		}
 	}
 
@@ -20,12 +23,16 @@ class App extends Component {
 		})
 	}
 
-	componentDidMount() {
+	getSelectTable = value => {
+		const selectedMatches = this.state.matches.filter(matchObj => matchObj.name === value)
+		this.setState({selectedMatches})
+	}
 
+	componentDidMount() {
 		const date = new Date();
 		const timeZone = date.getTimezoneOffset();
+		
 		this.getMatches('/topmatches/all', "Upcoming Top Matches")				
-
 		this.getMatches('/topmatches/today', "Today's Top Matches")
 	}
 
@@ -34,7 +41,8 @@ class App extends Component {
 		if (this.state.matches.length) {
 			return (
 				<div className="App">
-					<TableList matches={this.state.matches}/>
+					<SelectTable getSelectTable={this.getSelectTable} matches={this.state.matches}/>
+					{this.state.selectedMatches.length ? <MatchesTable matches={this.state.selectedMatches} /> : null}
 				</div>
 			);
 		}

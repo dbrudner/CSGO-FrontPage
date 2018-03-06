@@ -3,12 +3,15 @@ import TableRow from './table-row'
 
 export default function TableBody(props) {
 
+    console.log(props.matches)
+
+
     const renderMatchRows = () => {
-        if (!props.matches.matches) {
+        if (!props.matches) {
             console.log(props)
             return
         }
-        return props.matches.matches.map(match => {
+        return props.matches.map(match => {
             return <TableRow key={match.id} match={match} />
         })
     }
