@@ -11,7 +11,7 @@ export default function(props) {
 
     return (
         <tr>
-            <td>'countdown'</td>
+            <td>{props.match.timeUntil}</td>
             <td>
                 {props.match.team1.name}
                 <span><img src={team1imgUrl} style={imageStyle} /></span>

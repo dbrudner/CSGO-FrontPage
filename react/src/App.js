@@ -23,7 +23,7 @@ class App extends Component {
 	componentDidMount() {
 		const date = new Date();
 		const timeZone = date.getTimezoneOffset();
-		this.getMatches('/topmatches/all', "Upcoming Top Matches")				
+		// this.getMatches('/topmatches/all', "Upcoming Top Matches")				
 
 		this.getMatches('/topmatches/today', "Today's Top Matches")
 	}

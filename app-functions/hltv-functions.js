@@ -261,7 +261,7 @@ module.exports = {
             return this.filterTopMatches(matches)
         })
         .then(matches => {
-            this.addTimeUntil(matches)
+            return this.addTimeUntil(matches)
         })
     },
 
