@@ -13,11 +13,7 @@ export default function(props) {
     const date = new Date();
     const timeZone = date.getTimezoneOffset()/60;
     let newTime = moment(props.match.UTCTime).add(timeZone, 'h')
-    // newTime = newTime._d
-
-    console.log(newTime)
-    const formattedTime = moment(newTime).format("dddd, MMMM Do YYYY, h:mm:ss a")
-
+    const formattedTime = moment(newTime._d).format("dddd, MMMM Do YYYY, h:mm:ss a")
 
     return (
         <tr>
