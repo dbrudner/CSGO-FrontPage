@@ -6,16 +6,14 @@ import TableBody from './table-body'
 
 export default function MatchesTable(props) {
 
-
     const tableStyle = {
-        width: '90%',
+        width: '80%',
         textAlign: 'center',
         display: 'block',
         marginRight: 'auto',
         marginLeft: 'auto',
         marginTop: '20px'
     }
-
 
     return (
         <div style={tableStyle}>
