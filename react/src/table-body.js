@@ -5,7 +5,8 @@ export default function TableBody(props) {
 
     const renderMatchRows = () => {
         return props.matches.matches.map(match => {
-            return <TableRow match={match} />
+            console.log(match)
+            return <TableRow key={match.id} match={match} />
         })
     }
 

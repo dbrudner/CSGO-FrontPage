@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function(props) {
     const team1imgUrl = `https://static.hltv.org/images/team/logo/${props.match.team1.id}`
-    const team2imgUrl = `https://static.hltv.org/images/team/logo/${props.match.team1.id}`
+    const team2imgUrl = `https://static.hltv.org/images/team/logo/${props.match.team2.id}`
     
     const imageStyle = {
         width: '25px',
