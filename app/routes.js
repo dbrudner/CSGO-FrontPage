@@ -15,7 +15,11 @@ module.exports = function(app) {
 
     app.get('/matches/today', (req, res) => {
         hltv.nextDayTopMatches().then(matches => {
-            res.json(matches)
+            const returnObject = {
+                name: 'Top Matches Next 24 Hours',
+                matches
+            }
+            res.json(returnObject)
         })
     }),
 

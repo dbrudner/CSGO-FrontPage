@@ -1,12 +1,12 @@
 import React from 'react'
-import Table from './table'
+import MatchesTable from './matches-table'
 
 export default function TableList(props) {
 
     const renderTables = () => {
         return Object.keys(props).map((object, index) => {
             return (
-                <Table matches={props[object]}/>
+                <MatchesTable matches={props[object]}/>
             )
         })
         
@@ -17,5 +17,4 @@ export default function TableList(props) {
             {renderTables()}
         </div>
     )
-    
 }
