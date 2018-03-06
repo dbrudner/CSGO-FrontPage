@@ -25,7 +25,6 @@ module.exports = function(app) {
 
     app.get('/topmatches/all', (req, res) => {
         hltv.getUpcomingTopMatches().then(matches => {
-            console.log(matches)
             const returnObject = {
                 name: 'Top Upcoming Matches',
                 matches

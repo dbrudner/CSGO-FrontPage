@@ -81,6 +81,9 @@ module.exports = {
         .then(topMatches => {
             return this.convertMatchTimes(topMatches)
         })
+        .then(matches => {
+            return this.addTimeUntil(matches)
+        })
     },
 
     // Get all matches where at least one team is a top 10 team
@@ -256,6 +259,17 @@ module.exports = {
         return this.nextDayMatches()
         .then(matches => {
             return this.filterTopMatches(matches)
+        })
+        .then(matches => {
+            this.addTimeUntil(matches)
+        })
+    },
+
+    addTimeUntil: function(matches) {
+        return matches.map(match => {
+            let newMatch = match
+            newMatch.timeUntil = time.timeUntil(newMatch.date/1000)
+            return match
         })
     }
 }
