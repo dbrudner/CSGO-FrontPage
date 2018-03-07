@@ -31,6 +31,26 @@ module.exports = function(app) {
             }
             res.json(returnObject)
         })
+    }),
+
+    app.get('/matches/all', (req, res) => {
+        hltv.getAllMatches().then(matches => {
+            const returnObject = {
+                name: 'All Matches',
+                matches
+            }
+            res.json(returnObject)
+        })
+    }),
+
+    app.get('/matches/today', (req, res) => {
+        hltv.nextDayMatches().then(matches => {
+            const returnObject = {
+                name: 'Matches Next 24 Hours',
+                matches
+            }
+            res.json(returnObject)
+        })
     })
 
     app.get('*', (req, res) => {

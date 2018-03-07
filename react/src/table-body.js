@@ -3,9 +3,6 @@ import TableRow from './table-row'
 
 export default function TableBody(props) {
 
-    console.log(props.matches)
-
-
     const renderMatchRows = () => {
         if (!props.matches) {
             console.log(props)

@@ -34,6 +34,7 @@ class App extends Component {
 		
 		this.getMatches('/topmatches/all', "Upcoming Top Matches")			
 		this.getMatches('/topmatches/today', "Today's Top Matches")
+		this.getMatches('/matches/all', "All Matches")
 	}
 
 

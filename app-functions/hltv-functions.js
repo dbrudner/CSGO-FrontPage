@@ -52,24 +52,18 @@ module.exports = {
         })
     },
 
-    // Returns all upcoming matches with time until property
-    // timeUntil = {units of time}
-    timeUntilUpcomingMatches: function() {
-        return this.getUpcomingMatches()
-        .then(res => {
-            return res.map(match => {
-                if (match.date/1000 > moment().unix()) {
-                    let newMatch = match
-                    newMatch.timeUntil = time.timeUntil(newMatch.date/1000)
-                    return match
-                } else {return null}
-            })
+    // Gets all matches
+    getAllMatches: function() {
+        return HLTV.getMatches()
+        .then(matches => {
+            return this.addTimeUntil(matches)
         })
         .then(matches => {
             return this.convertMatchTimes(matches)
         })
     },
 
+    // Get all matches where at least one team is ranked top 10
     getUpcomingTopMatches: function() {
         return this.getTopRankings()
         .then(res => {
@@ -102,15 +96,6 @@ module.exports = {
 
                 return topTeamList.includes(match.team1.name) || topTeamList.includes(match.team2.name)
             })
-        })
-    },
-
-    getMatches: function() {
-        return HLTV.getMatches()
-        .then(matches => {
-            return matches
-        }).then(matches => {
-            return this.convertMatchTimes(matches)
         })
     },
     
@@ -240,18 +225,24 @@ module.exports = {
         })         
     },
 
+    nextDayOnly: function(matches) {
+        return matches.filter(match => {
+            if (match.date/1000 - time.getCurrentUnixTime() < (24 * 60 * 60 )) {
+                return true
+            } else {
+                return false
+            }
+        })
+    },
+
     nextDayMatches: function() {
         return this.getAllMatches()
         .then(matches => {
-            return matches.filter(match => {
-                if (match.date/1000 - time.getCurrentUnixTime() < (24 * 60 * 60 ) && !match.live) {
-                    return true
-                } else {
-                    return false
-                }
-            })
+            return this.nextDayOnly(matches)
         }).then(matches => {
             return this.convertMatchTimes(matches)
+        }).then(matches => {
+            return this.addTimeUntil(matches)
         })
     },
 
