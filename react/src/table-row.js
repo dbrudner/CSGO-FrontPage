@@ -34,12 +34,9 @@ export default function(props) {
         formattedTime = (() => <strong>LIVE</strong>)()
     } else {
         timeUntil = props.match.timeUntil
-        formattedTime = moment(newTime._d).format("dddd, MMMM Do YYYY, h:mm:ss a")
+        formattedTime = (moment(props.match.date).format("dddd, MMMM Do YYYY, h:mm:ss a"))
     }
-
-    console.log(moment(props.match.UTCTime).format("dddd, MMMM Do YYYY, h:mm:ss a"))
-    console.log(formattedTime)
-
+    
     //For Debugging
     const handleClick = () => {
         console.log(props.match)

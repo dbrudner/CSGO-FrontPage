@@ -192,7 +192,7 @@ module.exports = {
     convertMatchTimes: function(matches) {
         return matches.map(match => {
             let newMatch = match
-            newMatch.UTCTime = time.convertUnixToUtc(match.date)
+            // newMatch.UTCTime = time.convertUnixToUtc(match.date)
             return newMatch
         })
     },
