@@ -7,12 +7,10 @@ export default class SelectTeam extends Component {
     }
 
     renderTeams = () => {
-        console.log(this.props.teams)
         const teams = this.props.teams.sort((a, b) => {
             return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
         })
 
-        console.log(teams)
         return teams.map(team => {
             if (team) {
                 return <option value={team.name}>{team.name}</option>                

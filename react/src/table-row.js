@@ -3,6 +3,7 @@ import moment from 'moment'
 
 export default function(props) {
 
+    // Some matches don't have team1 or team2, so we do this complicated shit
     let team1imgUrl
     let team2imgUrl
     let team1name
@@ -18,34 +19,40 @@ export default function(props) {
         team2name = props.match.team2.name
     }
 
-    const imageStyle = {
-        width: '25px',
-        marginLeft: '10px'
-    }
-
+    // Convert time to user's timezone and format
     let formattedTime
     let timeUntil
 
     const date = new Date();
-    const timeZone = date.getTimezoneOffset()/60;
-    let newTime = moment(props.match.UTCTime).add(timeZone, 'h')
+    const timeZone = date.getTimezoneOffset();
+    let newTime = moment(props.match.UTCTime).subtract(timeZone, 'm')
 
-
-
-    if (!props.match.event) {
-        return null
-    }
-
-    const handleClick = () => {
-        console.log(props.match)
-    }
-
+   
+    // If the match is live, print "LIVE" instead of time
     if (props.match.live) {
         timeUntil = (() => <strong>LIVE</strong>)()
         formattedTime = (() => <strong>LIVE</strong>)()
     } else {
         timeUntil = props.match.timeUntil
         formattedTime = moment(newTime._d).format("dddd, MMMM Do YYYY, h:mm:ss a")
+    }
+
+    console.log(moment(props.match.UTCTime).format("dddd, MMMM Do YYYY, h:mm:ss a"))
+    console.log(formattedTime)
+
+    //For Debugging
+    const handleClick = () => {
+        console.log(props.match)
+    }
+
+    // S T Y L E B O Y Z
+    const imageStyle = {
+        width: '25px',
+        marginLeft: '10px'
+    }
+
+    if (!props.match.event) {
+        return null
     }
 
     return (

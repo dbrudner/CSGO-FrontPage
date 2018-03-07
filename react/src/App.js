@@ -20,7 +20,21 @@ class App extends Component {
 		}
 	}
 
-	getValue = (value, name) => {this.setState({name: value})}
+	getValue = (key, value) => {
+		this.setState({[key]: value}, () => {
+			let allMatches = this.state.matches.filter(matchObj => {return matchObj.name === 'All Matches'})
+
+			allMatches = allMatches[0].matches
+			const selectedMatches = allMatches.filter(match => {
+				if (match.team1) {
+					return match.team1.name === this.state.team || match.team2.name === this.state.team					
+				}
+			})
+
+			console.log(selectedMatches)
+			this.setState({selectedMatches})
+		})
+	}
 
 	getMatches = (route, name) => {
 		axios.get(route)
@@ -51,9 +65,7 @@ class App extends Component {
 		axios.get('/matches/all')
 		.then(matches => {
 			const matchesObject = {name: 'All Matches', matches: matches.data.matches}
-			let teams = matches.data.matches.reduce((acc, match) => {
-				return acc = [...acc, match.team1, match.team2]
-			}, [])
+			let teams = matches.data.matches.reduce((acc, match) => {return acc = [...acc, match.team1, match.team2]}, [])
 			teams = _.uniqBy(teams, 'name')
 
 			this.setState({matches: [...this.state.matches, matchesObject], teams})
@@ -66,11 +78,14 @@ class App extends Component {
 		if (this.state.matches.length) {
 
 			if (this.state.teamMode) {
+
+				const matches = {name: this.state.team, matches: this.state.selectedMatches}
+
 				return (
 					<div className="App">
 						<SelectTable value='Specific Team' getSelectTable={this.getSelectTable} matches={this.state.matches}/>
 						<SelectTeam getTeam={this.getValue} teams={this.state.teams}/>
-						{this.state.selectedMatches.length ? <MatchesTable matches={this.state.selectedMatches} /> : null}
+						{this.state.team && this.state.selectedMatches.length ? <MatchesTable matches={[matches]} /> : null}
 					</div>
 				)
 			}

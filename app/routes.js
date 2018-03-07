@@ -51,6 +51,10 @@ module.exports = function(app) {
             }
             res.json(returnObject)
         })
+    }),
+
+    app.get('/events', (req, res) => {
+        hltv.getEvents().then(events => res.json(events))
     })
 
     app.get('*', (req, res) => {

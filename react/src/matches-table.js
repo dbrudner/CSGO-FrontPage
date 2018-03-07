@@ -15,6 +15,8 @@ export default function MatchesTable(props) {
         marginTop: '20px'
     }
 
+    console.log(props.matches)
+
     return (
         <div style={tableStyle}>
             <TableTitle name={props.matches[0].name}/>
