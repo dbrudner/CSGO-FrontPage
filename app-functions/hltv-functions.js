@@ -45,11 +45,7 @@ module.exports = {
     // Returns all upcoming matches
     getUpcomingMatches: function() {
         return HLTV.getMatches()
-        .then(res => {
-            return res.filter(match => {
-                return !match.live
-            })
-        })
+        .then(res =>  res)
     },
 
     // Gets all matches
