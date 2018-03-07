@@ -8,11 +8,13 @@ export default class SelectTable extends Component {
     }
 
     render() {
-        const options = this.props.matches.map(match => <option key={match.id} value={match.name}>{match.name}</option>)
+        const options = this.props.matches.map(match => <option key={match.name} value={match.name}>{match.name}</option>)
 
         return (
             <select onChange={event => this.props.getSelectTable(event.target.value)}>
                 {options}
+                <option key='team' value='team'>By Specific Team</option>
+                <option key='event' value='event'>By Specific Event</option>
             </select>
         )
     }
