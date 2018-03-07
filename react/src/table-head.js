@@ -7,8 +7,8 @@ export default function TableHead() {
         fontSize: '.78em'
     }
 
-    const thStyle = {
-        textAlign: 'center',        
+    const cell = {
+        textAlign: 'center'
     }
 
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
@@ -16,11 +16,11 @@ export default function TableHead() {
     return (
         <thead>
             <tr style={trStyle}>
-                <th style={thStyle}>Start</th>
-                <th style={thStyle}>Team 1</th>
-                <th style={thStyle}>Team 2</th>
-                <th style={thStyle}>Event</th>
-                <th style={thStyle}>Time {timeZone}</th>
+                <th style={cell}>Start</th>
+                <th style={cell}>Team 1</th>
+                <th style={cell}>Team 2</th>
+                <th style={cell}>Event</th>
+                <th style={cell}>Time {timeZone}</th>
             </tr>
         </thead>
     )

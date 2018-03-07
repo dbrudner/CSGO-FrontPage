@@ -6,21 +6,26 @@ import TableBody from './table-body'
 
 export default function MatchesTable(props) {
 
-    const tableStyle = {
-        width: '80%',
+    const tableContainer = {
+        width: '100%',
         textAlign: 'center',
         display: 'block',
         marginRight: 'auto',
         marginLeft: 'auto',
-        marginTop: '20px'
+        marginTop: '20px',
+    }
+
+    const table = {
+        width: '1px',
+        margin: 'auto'
     }
 
     console.log(props.matches)
 
     return (
-        <div style={tableStyle}>
+        <div style={tableContainer}>
             <TableTitle name={props.matches[0].name}/>
-            <Table striped bordered hover responsive condensed>
+            <Table style={table} striped bordered hover responsive condensed>
                 <TableHead/>
                 <TableBody matches={props.matches[0].matches}/>
             </Table>

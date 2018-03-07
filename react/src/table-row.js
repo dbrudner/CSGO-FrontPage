@@ -28,10 +28,15 @@ export default function(props) {
     let newTime = moment(props.match.UTCTime).subtract(timeZone, 'm')
 
    
+    const liveText = {
+        fontWeight: '700',
+        color: 'red'
+    }
+
     // If the match is live, print "LIVE" instead of time
     if (props.match.live) {
-        timeUntil = (() => <strong>LIVE</strong>)()
-        formattedTime = (() => <strong>LIVE</strong>)()
+        timeUntil = (() => <div style={liveText}>LIVE</div>)()
+        formattedTime = (() => <div style={liveText}>LIVE</div>)()
     } else {
         timeUntil = props.match.timeUntil
         formattedTime = (moment(props.match.date).format("dddd, MMMM Do YYYY, h:mm:ss a"))
@@ -48,23 +53,30 @@ export default function(props) {
         marginLeft: '10px'
     }
 
+    const cell = {
+        whiteSpace: 'nowrap',
+        width: '1%'
+    }
+
+    
+
     if (!props.match.event) {
         return null
     }
 
     return (
         <tr onClick={handleClick}>
-            <td>{timeUntil}</td>
-            <td>
+            <td style={cell}>{timeUntil}</td>
+            <td style={cell}>
                 {team1name || 'Unknown'}
                 <span><img src={team1imgUrl || 'https://seeklogo.com/images/C/Counter-Strike-logo-EAC70C9C3A-seeklogo.com.png'} style={imageStyle} /></span>
             </td>
-            <td>
+            <td style={cell}>
                 {team2name || 'Unknown'}
                 <span><img src={team2imgUrl || 'https://seeklogo.com/images/C/Counter-Strike-logo-EAC70C9C3A-seeklogo.com.png'} style={imageStyle} /></span>
             </td>
-            <td>{props.match.event.name}</td>
-            <td>{formattedTime}</td>
+            <td style={cell}>{props.match.event.name}</td>
+            <td style={cell}>{formattedTime}</td>
         </tr>
     )
 }
