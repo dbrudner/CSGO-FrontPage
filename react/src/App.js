@@ -3,7 +3,7 @@ import TableList from './tableList'
 import SelectTable from './select-table'
 import axios from 'axios'
 import MatchesTable from './matches-table'
-import SelectTeam from './select-team'
+import Select from './select'
 import _ from 'lodash'
 
 class App extends Component {
@@ -45,9 +45,13 @@ class App extends Component {
 	}
 
 	getSelectTable = value => {
-
+		console.log(value)
 		if (value === 'team') {
 			this.setState({teamMode: true})
+		} else if (value === 'event') {
+			this.setState({eventMode: true})
+		} else {
+			this.setState({teamMode: false, eventMode: false})
 		}
 
 		const selectedMatches = this.state.matches.filter(matchObj => matchObj.name === value)
@@ -68,7 +72,16 @@ class App extends Component {
 			let teams = matches.data.matches.reduce((acc, match) => {return acc = [...acc, match.team1, match.team2]}, [])
 			teams = _.uniqBy(teams, 'name')
 
-			this.setState({matches: [...this.state.matches, matchesObject], teams})
+			let events = matches.data.matches.reduce((acc, match) => {
+				if (match.event && !acc.includes(match.event.name)) {
+					return acc = [...acc, match.event.name]		
+				} else {
+					return acc
+				}
+			}, [])
+
+			
+			this.setState({matches: [...this.state.matches, matchesObject], teams, events})
 		})
 	}
 
@@ -77,14 +90,12 @@ class App extends Component {
 
 		if (this.state.matches.length) {
 
-			if (this.state.teamMode) {
-
+			if (this.state.teamMode || this.state.eventMode) {
 				const matches = {name: this.state.team, matches: this.state.selectedMatches}
-
 				return (
 					<div className="App">
 						<SelectTable value='Specific Team' getSelectTable={this.getSelectTable} matches={this.state.matches}/>
-						<SelectTeam getTeam={this.getValue} teams={this.state.teams}/>
+						<Select getValue={this.getValue} options={this.state.teamMode ? this.state.teams : this.state.events} eventMode={this.state.eventMode} />
 						{this.state.team && this.state.selectedMatches.length ? <MatchesTable matches={[matches]} /> : null}
 					</div>
 				)
