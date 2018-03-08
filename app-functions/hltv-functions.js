@@ -258,5 +258,11 @@ module.exports = {
             newMatch.timeUntil = time.timeUntil(newMatch.date/1000)
             return match
         })
+    },
+
+    getResults: function() {
+        return HLTV.getResults({pages: 2}).then(res => {
+            return res
+          })
     }
 }

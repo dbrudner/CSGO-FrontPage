@@ -59,11 +59,11 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		const date = new Date();
-		const timeZone = date.getTimezoneOffset();
 		
 		this.getMatches('/topmatches/all', "Upcoming Top Matches")			
 		this.getMatches('/topmatches/today', "Today's Top Matches")
+		this.getMatches('/livematches', "Live Matches")
+		
 
 		// This is seperate from the other requests because it's used to get all teams for teams select
 		axios.get('/matches/all')

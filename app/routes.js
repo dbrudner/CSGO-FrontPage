@@ -55,7 +55,11 @@ module.exports = function(app) {
 
     app.get('/events', (req, res) => {
         hltv.getEvents().then(events => res.json(events))
-    })
+    }),
+
+    app.get('/livematches', (req, res) => {
+        hltv.getLiveMatches().then(matches => res.json(matches))
+    }),
 
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname+'/react/build/index.html'))
