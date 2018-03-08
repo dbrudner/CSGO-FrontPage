@@ -1,6 +1,5 @@
 import React from 'react'
 import moment from 'moment'
-import './index.css'
 
 export default function(props) {
 
@@ -49,6 +48,7 @@ export default function(props) {
     // S T Y L E B O Y Z
     const imageStyle = {
         width: '25px',
+        height: '25px',
         marginLeft: '10px'
     }
 

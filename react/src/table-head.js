@@ -4,7 +4,8 @@ export default function TableHead() {
     
     const trStyle = {
         textAlign: 'center',
-        fontSize: '.78em'
+        fontSize: '1em !important',
+
     }
 
     const cell = {
