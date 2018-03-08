@@ -25,7 +25,7 @@ export default function MatchesTable(props) {
     return (
         <div style={tableContainer}>
             <TableTitle name={props.matches[0].name}/>
-            <Table style={table} striped bordered hover responsive condensed>
+            <Table style={table}>
                 <TableHead/>
                 <TableBody matches={props.matches[0].matches}/>
             </Table>

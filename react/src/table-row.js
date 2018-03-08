@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import './index.css'
 
 export default function(props) {
 
@@ -27,12 +28,10 @@ export default function(props) {
     const timeZone = date.getTimezoneOffset();
     let newTime = moment(props.match.UTCTime).subtract(timeZone, 'm')
 
-   
     const liveText = {
-        fontWeight: '700',
-        color: 'red'
+        color: 'red',
+        fontWeight: '700'
     }
-
     // If the match is live, print "LIVE" instead of time
     if (props.match.live) {
         timeUntil = (() => <div style={liveText}>LIVE</div>)()
@@ -57,15 +56,15 @@ export default function(props) {
         whiteSpace: 'nowrap',
         width: '1%'
     }
-
     
-
+   
+    
     if (!props.match.event) {
         return null
     }
 
     return (
-        <tr onClick={handleClick}>
+        <tr className='trow' onClick={handleClick}>
             <td style={cell}>{timeUntil}</td>
             <td style={cell}>
                 {team1name || 'Unknown'}
