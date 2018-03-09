@@ -50,6 +50,7 @@ body {
 }
 
 .header-description {
+    text-transform: uppercase;
     animation: fadeInBottom;
     animation-duration: 1s;
     font-size: 3rem;
@@ -113,6 +114,12 @@ body {
     animation: fadeInImage;
     animation-duration: 1s;
 }
+
+.schedule-container {
+    display: inline-block
+}
+
+.options
 
 @keyframes fadeInImage {
     0% {

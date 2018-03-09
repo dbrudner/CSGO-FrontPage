@@ -16,7 +16,9 @@ class App extends Component {
 			matches: [],
 			selectedMatches: [],
 			team: null,
-			itemsReturned: 0
+			itemsReturned: 0,
+			showScheduleDropDown: false,
+			showResultsDropDown: false
 		}
 	}
 
@@ -75,7 +77,7 @@ class App extends Component {
 					<main className='main'>
 						<div className='buttons'>
 							<Button btnClass='live' btnText='Live' />
-							<Button dropDown btnClass='schedule' btnText='Schedule'/>
+							<Button dropDown btnClass='schedule' btnText='Schedule'/>								
 							<Button dropDown btnClass='results' btnText='Results'/>
 						</div>
 					</main>
