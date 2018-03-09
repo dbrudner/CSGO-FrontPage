@@ -21,19 +21,37 @@ class App extends Component {
 	}
 
 	getValue = (key, value) => {
+
 		this.setState({[key]: value}, () => {
 			let allMatches = this.state.matches.filter(matchObj => {return matchObj.name === 'All Matches'})
-
+			console.log('value')
 			allMatches = allMatches[0].matches
-			const selectedMatches = allMatches.filter(match => {
-				if (match.team1) {
-					return match.team1.name === this.state.team || match.team2.name === this.state.team					
-				}
-			})
+			if (key === 'team') {
+				console.log('teee')
+				const selectedMatches = allMatches.filter(match => {
+					if (match.team1) {
+						return match.team1.name === this.state.team || match.team2.name === this.state.team					
+					}
+				})
 
-			console.log(selectedMatches)
-			this.setState({selectedMatches})
+				this.setState({selectedMatches})
+			}
+
+
+			if (key ==='event') {
+				console.log('he')
+				const selectedMatches = allMatches.filter(match => {
+					if (match.event) {
+						return match.event.name === this.state.event
+					}
+				})
+				console.log(selectedMatches)
+				this.setState({selectedMatches})				
+			}
+
 		})
+		
+		
 	}
 
 	getMatches = (route, name) => {
@@ -45,7 +63,6 @@ class App extends Component {
 	}
 
 	getSelectTable = value => {
-		console.log(value)
 		if (value === 'team') {
 			this.setState({teamMode: true})
 		} else if (value === 'event') {
@@ -88,15 +105,16 @@ class App extends Component {
 
 	render() {
 
-		if (this.state.matches.length) {
+		if (this.state.matches.length > 2) {
 
 			if (this.state.teamMode || this.state.eventMode) {
 				const matches = {name: this.state.team, matches: this.state.selectedMatches}
+				console.log(matches)
 				return (
 					<div className="App">
 						<SelectTable value='Specific Team' getSelectTable={this.getSelectTable} matches={this.state.matches}/>
-						<Select getValue={this.getValue} options={this.state.teamMode ? this.state.teams : this.state.events} eventMode={this.state.eventMode} />
-						{this.state.team && this.state.selectedMatches.length ? <MatchesTable matches={[matches]} /> : null}
+						<Select valueName={this.state.teamMode ? 'team' : 'event'} getValue={this.getValue} options={this.state.teamMode ? this.state.teams : this.state.events} eventMode={this.state.eventMode} />
+						{this.state.team || this.state.event && this.state.selectedMatches.length ? <MatchesTable matches={[matches]} /> : null}
 					</div>
 				)
 			}

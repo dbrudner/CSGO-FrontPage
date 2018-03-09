@@ -7,6 +7,7 @@ export default class Select extends Component {
     }
 
     renderOptions = () => {
+
         const options = this.props.options.sort((a, b) => {
             if (this.props.eventMode) {
                 return a.toLowerCase().localeCompare(b.toLowerCase());
@@ -29,10 +30,9 @@ export default class Select extends Component {
 
     render() {
 
-        console.log(this.props.options)
 
         return (
-            <select onChange={event => this.props.getValue('team', event.target.value) }>
+            <select onChange={event => this.props.getValue(this.props.valueName, event.target.value) }>
                 {this.renderOptions()}
             </select>
         )
