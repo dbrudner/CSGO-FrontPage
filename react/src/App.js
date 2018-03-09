@@ -3,6 +3,8 @@ import axios from 'axios'
 import _ from 'lodash'
 
 import Header from './header/header'
+import TeamImages from './header/team-images'
+
 import Button from './button/button'
 
 class App extends Component {
@@ -56,12 +58,17 @@ class App extends Component {
 	render() {
 		return (
 			<div>
-				<Header/>
-				<div className='buttons'>
-					<Button btnClass='live' btnText='Live' />
-					<Button dropDown btnClass='schedule' btnText='Schedule'/>
-					<Button dropDown btnClass='results' btnText='Results'/>
-				</div>				
+				<div className='header-container'>
+					<TeamImages />
+					<Header/>
+				</div>
+				<main className='main'>
+					<div className='buttons'>
+						<Button btnClass='live' btnText='Live' />
+						<Button dropDown btnClass='schedule' btnText='Schedule'/>
+						<Button dropDown btnClass='results' btnText='Results'/>
+					</div>
+				</main>
 			</div>
 		)	
 	}

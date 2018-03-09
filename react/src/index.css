@@ -25,6 +25,14 @@ body {
     height: 50vh;
 }
 
+.header-container {
+    position: relative;
+}
+
+.team-images {
+    position: absolute;
+}
+
 .header-title {
     text-transform: uppercase;
     letter-spacing: 1.75rem;
@@ -49,7 +57,6 @@ body {
 .buttons {
     display: table;
     margin: 0 auto;
-    margin-top: -2.5rem;
 }
 
 .buttons div:first-child {
@@ -60,24 +67,28 @@ body {
     font-size: 2rem;
     margin-left: 5rem;
     letter-spacing: .2rem;
-    border-radius: 50px;
     display: inline-block;
-    background-color: red;
-    color: white;
+    
     padding: 1rem 2rem;
     text-transform: uppercase;
     transition: all .2s;    
 }
 
+.live {
+    color: rgb(206, 78, 78);
+}
+
+.results, .schedule {
+    color: rgb(43, 43, 116)
+}
+
 .btn:hover {
     cursor: pointer;
-    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.205);
     transform: translateY(-4px);
 }
 
 .btn:active {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 1rem rgba(0, 0, 0, .2);
+    transform: translateY(-1px);
 }
 
 @keyframes fadeInTop {
