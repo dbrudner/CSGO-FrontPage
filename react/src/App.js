@@ -18,8 +18,7 @@ class App extends Component {
 			selectedMatches: [],
 			team: null,
 			itemsReturned: 0,
-			showScheduleDropDown: false,
-			showResultsDropDown: false
+			show: ''
 		}
 	}
 
@@ -60,14 +59,11 @@ class App extends Component {
 		// })
 	}
 
-	setMode = mode => {
-		if (this.state[mode]) {
-			return this.setState({[mode]: false})
-		} else {this.setState({[mode]: true})}
-	}
+	setMode = mode => {return this.setState({show: mode})}
 
 
 	render() {
+		console.log(this.state.show)
 
 		if (this.state.itemsReturned === 5) {
 
@@ -84,23 +80,40 @@ class App extends Component {
 					<main className='main'>
 						<div className='buttons'>
 							<div>
-								<Button btnClass='live' btnText='Live' />
+							<Button 
+									onClick={() => this.setMode('live')} 
+									active={this.state.show === 'live' ? true : false} 
+									btnClass='live' 
+									btnText='live'
+								/>
 							</div>
 							<div>
 								<Button 
-									onClick={() => this.setMode('showScheduleDropDown')}dropDown 
-									active={this.state.showScheduleDropDown}
+									onClick={() => this.setMode('schedule')}
+									dropDown 
+									active={this.state.show === 'schedule' ? true : false} 
 									btnClass='schedule' 
-									btnText='Schedule'
+									btnText='schedule'
 								/>
 								
 								<DropDown 
-									reveal={this.state.showScheduleDropDown} 
+									reveal={this.state.show === 'schedule' ? true : false} 
 									items={['Top', 'Teams', 'Events', 'All']}
 								/>
 							</div>
 							<div>
-								<Button dropDown btnClass='results' btnText='Results'/>
+								<Button 
+									onClick={() => this.setMode('results')}
+									dropDown 
+									active={this.state.show === 'results' ? true : false} 
+									btnClass='results' 
+									btnText='results'
+								/>
+								
+								<DropDown 
+									reveal={this.state.show === 'results' ? true : false} 
+									items={['Top', 'Teams', 'Events', 'All']}
+								/>
 							</div>
 						</div>
 					</main>
