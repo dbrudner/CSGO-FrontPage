@@ -65,7 +65,8 @@ body {
 
 .header-title {
     text-transform: uppercase;
-    letter-spacing: 1.75rem;
+    letter-spacing: 5rem;
+    margin-left: 5rem;
     animation: fadeInTop;
     animation-duration: 1s;
     font-size: 12.5rem;
@@ -113,7 +114,12 @@ body {
 }
 
 .live {
+    color: rgb(88, 88, 88);
+}
+
+.live-active-btn {
     color: rgb(206, 78, 78);
+    
 }
 
 .results, .schedule {

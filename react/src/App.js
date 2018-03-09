@@ -97,11 +97,12 @@ class App extends Component {
 					<main className='main'>
 						<div className='buttons'>
 							<div>
-							<Button
+								<Button
 									onClick={() => this.setMode('live')}
 									active={this.state.show === 'live' ? true : false}
 									btnClass='live'
 									btnText='live'
+									activeClass='live-active-btn'
 								/>
 							</div>
 							<div>

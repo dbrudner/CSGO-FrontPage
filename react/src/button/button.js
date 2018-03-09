@@ -9,7 +9,7 @@ export default function Button(props) {
 
     const active = () => {
         if (props.active) {
-            return 'btn-active'
+            return props.activeClass || 'btn-active'
         } else {return null}
     }
 
