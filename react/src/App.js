@@ -59,7 +59,13 @@ class App extends Component {
 		// })
 	}
 
-	setMode = mode => {return this.setState({show: mode})}
+	setMode = mode => {
+		if (this.state.show !== mode) {
+			return this.setState({show: mode})
+		} else {
+			return this.setState({show: null})
+		}
+	}
 
 
 	render() {
@@ -80,38 +86,38 @@ class App extends Component {
 					<main className='main'>
 						<div className='buttons'>
 							<div>
-							<Button 
-									onClick={() => this.setMode('live')} 
-									active={this.state.show === 'live' ? true : false} 
-									btnClass='live' 
+							<Button
+									onClick={() => this.setMode('live')}
+									active={this.state.show === 'live' ? true : false}
+									btnClass='live'
 									btnText='live'
 								/>
 							</div>
 							<div>
-								<Button 
+								<Button
 									onClick={() => this.setMode('schedule')}
-									dropDown 
-									active={this.state.show === 'schedule' ? true : false} 
-									btnClass='schedule' 
+									dropDown
+									active={this.state.show === 'schedule' ? true : false}
+									btnClass='schedule'
 									btnText='schedule'
 								/>
-								
-								<DropDown 
-									reveal={this.state.show === 'schedule' ? true : false} 
+
+								<DropDown
+									reveal={this.state.show === 'schedule' ? true : false}
 									items={['Top', 'Teams', 'Events', 'All']}
 								/>
 							</div>
 							<div>
-								<Button 
+								<Button
 									onClick={() => this.setMode('results')}
-									dropDown 
-									active={this.state.show === 'results' ? true : false} 
-									btnClass='results' 
+									dropDown
+									active={this.state.show === 'results' ? true : false}
+									btnClass='results'
 									btnText='results'
 								/>
-								
-								<DropDown 
-									reveal={this.state.show === 'results' ? true : false} 
+
+								<DropDown
+									reveal={this.state.show === 'results' ? true : false}
 									items={['Top', 'Teams', 'Events', 'All']}
 								/>
 							</div>
