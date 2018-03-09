@@ -35,6 +35,7 @@ body {
 .drop-list-item {
     cursor:pointer;
     margin: .8rem;
+    text-transform: uppercase;
 }
 
 .drop-list-item:last-child {
@@ -44,6 +45,12 @@ body {
 .drop-list-item:hover {
     transform: scale(1.5);
     transition: .3s;
+    color: black;
+}
+
+.drop-list-item:active {
+    transform: scale(1.2);
+    transition: .2s;
     color: black;
 }
 

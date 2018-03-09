@@ -2,11 +2,17 @@ import React from 'react'
 
 export default function(props) {
 
-    console.log(props)
+    const getOption = option => {
+        const renderObject = {
+            option,
+            category: props.category
+        }
+        props.getOption(renderObject)
+    }
 
     const renderList = () => {
         return props.items.map(item => {
-            return <li className='drop-list-item'>{item}</li>
+            return <li onClick={() => getOption(item)} key={item} className='drop-list-item'>{item}</li>
         })
     }
 

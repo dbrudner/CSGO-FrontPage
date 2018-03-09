@@ -67,9 +67,20 @@ class App extends Component {
 		}
 	}
 
+	getRenderOption = render => {
+		this.setState({
+			render,
+			show: null
+		}, () => this.renderTable())
+	}
+
+	renderTable = () => {
+		console.log(this.state.render)
+	}
+
+
 
 	render() {
-		console.log(this.state.show)
 
 		if (this.state.itemsReturned === 5) {
 
@@ -103,8 +114,10 @@ class App extends Component {
 								/>
 
 								<DropDown
+									category='schedule'
 									reveal={this.state.show === 'schedule' ? true : false}
-									items={['Top', 'Teams', 'Events', 'All']}
+									items={['top', 'teams', 'events', 'all']}
+									getOption={this.getRenderOption}
 								/>
 							</div>
 							<div>
@@ -117,8 +130,10 @@ class App extends Component {
 								/>
 
 								<DropDown
+									category='results'
 									reveal={this.state.show === 'results' ? true : false}
-									items={['Top', 'Teams', 'Events', 'All']}
+									items={['top', 'teams', 'events', 'all']}
+									getOption={this.getRenderOption}
 								/>
 							</div>
 						</div>

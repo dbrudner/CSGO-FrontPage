@@ -2,8 +2,6 @@ import React from 'react'
 
 export default function Button(props) {
 
-    console.log(props)
-
     const iconStyle = {
         marginLeft:'5px'
     }
