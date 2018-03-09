@@ -6,7 +6,7 @@ export default function(props) {
 
     const renderList = () => {
         return props.items.map(item => {
-            return <li>{item}</li>
+            return <li className='drop-list-item'>{item}</li>
         })
     }
 
@@ -19,6 +19,4 @@ export default function(props) {
     } else {
         return <div/>
     }
-
-    
 }

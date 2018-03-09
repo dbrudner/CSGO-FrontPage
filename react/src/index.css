@@ -32,6 +32,21 @@ body {
     width: 100vw;
 }
 
+.drop-list-item {
+    cursor:pointer;
+    margin: .8rem;
+}
+
+.drop-list-item:last-child {
+    margin: 0;
+}
+
+.drop-list-item:hover {
+    transform: scale(1.5);
+    transition: .3s;
+    color: black;
+}
+
 .header-container {
     position: relative;
     z-index: -2;
