@@ -7,6 +7,7 @@ import ImageGroupBackground from './header/image-group-background'
 
 import Button from './button/button'
 import DropDown from './dropdown/dropdown'
+import Table from './table/table'
 
 class App extends Component {
 
@@ -18,24 +19,41 @@ class App extends Component {
 			selectedMatches: [],
 			team: null,
 			itemsReturned: 0,
-			show: ''
+			show: '',
+			schedule: [],
+			results: [],
+			live: []
 		}
 	}
 
-	getSomething = (route, name) => {
+	getMatches = (route, name, category) => {
 		axios.get(route)
-		.then(things => {
-			this.setState({[name]: things.data, itemsReturned: this.state.itemsReturned + 1})
+		.then(res => {
+			const key = category
+			const matches = res.data
+			const matchesObj = {name,matches}
+				console.log(key)
+				this.setState({
+					[key]: [...this.state[key], matchesObj],
+					itemsReturned: this.state.itemsReturned + 1
+				})
+		})
+	}
+
+	getTeams = (route, name) => {
+		axios.get(route)
+		.then(teams => {
+			this.setState({[name]: teams.data, itemsReturned: this.state.itemsReturned + 1})
 		})
 	}
 
 	componentDidMount() {
 
-		this.getSomething('/topmatches/all', "upcomingTopMatches")
-		this.getSomething('/topmatches/today', "todayTopMatches")
-		this.getSomething('/matches/all', "allMatches")
-		this.getSomething('/livematches', "liveMatches")
-		this.getSomething('/topteams', "topTeams")
+		this.getMatches('/topmatches/all', "upcomingTopMatches", 'schedule')
+		this.getMatches('/topmatches/today', "todayTopMatches", 'schedule')
+		this.getMatches('/matches/all', "allMatches", 'schedule')
+		this.getMatches('/livematches', "liveMatches", 'live')
+		this.getTeams('/topteams', "topTeams")
 
 
 
@@ -74,13 +92,33 @@ class App extends Component {
 		}, () => this.renderTable())
 	}
 
-	renderTable = () => {
-		console.log(this.state.render)
-	}
+	// renderTable = () => {
+	// 	console.log(this.state.render)
+	// 	if (this.state.render.category === 'schedule') {
+
+	// 		tableObject = {
+	// 			headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time'],
+
+	// 		}
+	// 	}
+
+	// 	if (this.state.render.category === 'schedule') {
+	// 		tableObject = {
+	// 			headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+	// 		}
+	// 	}
+
+	// 	if (this.state.render.category === 'live') {
+	// 		tableObject = {
+	// 			headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+	// 		}
+	// 	}
+	// }
 
 
 
 	render() {
+		console.log(this.state)
 
 		if (this.state.itemsReturned === 5) {
 
@@ -137,6 +175,9 @@ class App extends Component {
 									getOption={this.getRenderOption}
 								/>
 							</div>
+						</div>
+						<div className='table-container'>
+							<Table />
 						</div>
 					</main>
 				</div>
