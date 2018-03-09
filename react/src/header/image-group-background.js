@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function(props) {
     
-    const imgCntr = {padding: '2rem'}
+    const imgCntr = {padding: '1rem'}
     const imageArray = {display: 'grid', gridTemplateColumns: 'auto auto auto auto', position: 'absolute'}
 
     const renderImages = () => {
@@ -14,7 +14,7 @@ export default function(props) {
             )
         })
 
-        return images.slice(0,24)
+        return images.slice(0,28)
     }
     
     return (

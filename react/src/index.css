@@ -28,6 +28,7 @@ body {
     background-image: linear-gradient(to right, rgb(231, 231, 231),rgb(128, 128, 128));
     background-size: cover;
     height: 50vh;
+    width: 100vw;
 }
 
 .header-container {
