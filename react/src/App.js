@@ -89,6 +89,7 @@ class App extends Component {
 							<div>
 								<Button 
 									onClick={() => this.setMode('showScheduleDropDown')}dropDown 
+									active={this.state.showScheduleDropDown}
 									btnClass='schedule' 
 									btnText='Schedule'
 								/>

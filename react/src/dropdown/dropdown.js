@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function(props) {
 
-    console.log(props.items)
+    console.log(props)
 
     const renderList = () => {
         return props.items.map(item => {

@@ -107,8 +107,14 @@ body {
     transform: translateY(-1px);
 }
 
+.btn-active {
+    color: green;
+    border-bottom: 2px solid green;
+    transform: translateY(-4px);    
+}
+
 .teamArrayImg {
-    width: 10rem;
+    width: 10.8rem;
     opacity: .05;
 }
 
