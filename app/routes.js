@@ -61,7 +61,11 @@ module.exports = function(app) {
         hltv.getLiveMatches().then(matches => res.json(matches))
     }),
 
+    app.get('/topteams', (req, res) => {
+        hltv.getAllTopTeams().then(teams => res.json(teams))
+    })
+
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname+'/react/build/index.html'))
-      });
+    });
 };

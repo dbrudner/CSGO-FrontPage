@@ -121,6 +121,15 @@ module.exports = {
         })
     },
 
+    getAllTopTeams: function() {
+        return HLTV.getTeamRanking().then(res => {
+            return res.reduce((acc, topTeam) => {
+                return [...acc, {name: topTeam.team.name, id: topTeam.team.id}]
+            }, [])
+        })
+    },
+
+
     getAllTeamsForEvents: function() {
         return this.getAllMatches()
         .then(res => {
