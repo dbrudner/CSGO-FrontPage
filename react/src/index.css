@@ -32,6 +32,7 @@ body {
 
 .header-container {
     position: relative;
+    z-index: -2;
 }
 
 .team-images {
@@ -62,13 +63,19 @@ body {
 .buttons {
     display: table;
     margin: 0 auto;
+    z-index: 2;
 }
 
 .buttons div:first-child {
     margin-left: 0;
 }
 
+.main {
+    z-index: 2;
+}
+
 .btn {
+    z-index: 2;
     font-size: 2rem;
     margin-left: 5rem;
     letter-spacing: .2rem;
@@ -98,7 +105,7 @@ body {
 
 .teamArrayImg {
     width: 10rem;
-    opacity: .05
+    opacity: .05;
 }
 
 .teamArrayImg:active {

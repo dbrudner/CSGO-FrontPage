@@ -8,7 +8,7 @@ export default function(props) {
     const renderImages = () => {
         const images = props.srcArray.map(src => {
             return (
-                <div style={imgCntr}>
+                <div key={src} style={imgCntr}>
                     <img className='teamArrayImg' src={src} />
                 </div>
             )
