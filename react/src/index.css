@@ -49,6 +49,7 @@ body {
 .buttons {
     display: table;
     margin: 0 auto;
+    margin-top: -2.5rem;
 }
 
 .buttons div:first-child {
@@ -60,10 +61,23 @@ body {
     margin-left: 5rem;
     letter-spacing: .2rem;
     border-radius: 50px;
-    display: inline;
+    display: inline-block;
     background-color: red;
     color: white;
     padding: 1rem 2rem;
+    text-transform: uppercase;
+    transition: all .2s;    
+}
+
+.btn:hover {
+    cursor: pointer;
+    box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.205);
+    transform: translateY(-4px);
+}
+
+.btn:active {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 1rem rgba(0, 0, 0, .2);
 }
 
 @keyframes fadeInTop {

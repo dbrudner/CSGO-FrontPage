@@ -58,9 +58,9 @@ class App extends Component {
 			<div>
 				<Header/>
 				<div className='buttons'>
-					<Button btnClass='live' btnText='LIVE'/>
-					<Button btnClass='schedule' btnText='Schedule'/>
-					<Button btnClass='results' btnText='Results'/>
+					<Button btnClass='live' btnText='Live' />
+					<Button dropDown btnClass='schedule' btnText='Schedule'/>
+					<Button dropDown btnClass='results' btnText='Results'/>
 				</div>				
 			</div>
 		)	
