@@ -6,6 +6,7 @@ import Header from './header/header'
 import ImageGroupBackground from './header/image-group-background'
 
 import Button from './button/button'
+import DropDown from './dropdown/dropdown'
 
 class App extends Component {
 
@@ -30,14 +31,14 @@ class App extends Component {
 	}
 
 	componentDidMount() {
-		
-		this.getSomething('/topmatches/all', "upcomingTopMatches")			
+
+		this.getSomething('/topmatches/all', "upcomingTopMatches")
 		this.getSomething('/topmatches/today', "todayTopMatches")
-		this.getSomething('/matches/all', "allMatches")		
+		this.getSomething('/matches/all', "allMatches")
 		this.getSomething('/livematches', "liveMatches")
 		this.getSomething('/topteams', "topTeams")
-		
-		
+
+
 
 		// This is seperate from the other requests because it's used to get all teams for teams select
 		// axios.get('/matches/all')
@@ -48,15 +49,21 @@ class App extends Component {
 
 		// 	let events = matches.data.matches.reduce((acc, match) => {
 		// 		if (match.event && !acc.includes(match.event.name)) {
-		// 			return acc = [...acc, match.event.name]		
+		// 			return acc = [...acc, match.event.name]
 		// 		} else {
 		// 			return acc
 		// 		}
 		// 	}, [])
 
-			
+
 		// 	this.setState({matches: [...this.state.matches, matchesObject], teams, events})
 		// })
+	}
+
+	setMode = mode => {
+		if (this.state[mode]) {
+			return this.setState({[mode]: false})
+		} else {this.setState({[mode]: true})}
 	}
 
 
@@ -76,9 +83,24 @@ class App extends Component {
 					</div>
 					<main className='main'>
 						<div className='buttons'>
-							<Button btnClass='live' btnText='Live' />
-							<Button dropDown btnClass='schedule' btnText='Schedule'/>								
-							<Button dropDown btnClass='results' btnText='Results'/>
+							<div>
+								<Button btnClass='live' btnText='Live' />
+							</div>
+							<div>
+								<Button 
+									onClick={() => this.setMode('showScheduleDropDown')}dropDown 
+									btnClass='schedule' 
+									btnText='Schedule'
+								/>
+								
+								<DropDown 
+									reveal={this.state.showScheduleDropDown} 
+									items={['Top', 'Teams', 'Events', 'All']}
+								/>
+							</div>
+							<div>
+								<Button dropDown btnClass='results' btnText='Results'/>
+							</div>
 						</div>
 					</main>
 				</div>

@@ -9,6 +9,7 @@
 html {
     /* Defines 1rem */
     font-size: 62.5%;
+    overflow-x: hidden;
 }
 
 body {
@@ -63,27 +64,28 @@ body {
 }
 
 .buttons {
-    display: table;
-    margin: 0 auto;
+    display: flex;
+    justify-content: center;
     z-index: 2;
-}
-
-.buttons div:first-child {
-    margin-left: 0;
+    margin-left: .5rem;
 }
 
 .main {
     z-index: 2;
 }
 
+.dropdown-list {
+    list-style: none;
+    font-size: 1.6rem;
+}
+
 .btn {
     z-index: 2;
     font-size: 2rem;
-    margin-left: 5rem;
     letter-spacing: .2rem;
     display: inline-block;
     
-    padding: 1rem 2rem;
+    padding: 1rem 2rem 0 2rem;
     text-transform: uppercase;
     transition: all .2s;    
 }

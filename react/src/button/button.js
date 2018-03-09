@@ -7,7 +7,7 @@ export default function Button(props) {
     }
 
     return (
-        <div className={`btn ${props.btnClass}`}>
+        <div onClick={props.onClick} className={`btn ${props.btnClass}`}>
             {props.btnText}{props.dropDown ? <i style={iconStyle} className="fas fa-chevron-circle-down"></i> : <i style={iconStyle} className="fas fa-circle"></i>}
         </div>
     )
