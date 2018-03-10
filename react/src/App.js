@@ -25,7 +25,8 @@ class App extends Component {
 			schedule: [],
 			results: [],
 			live: [],
-			renderObject: null
+			renderObject: null,
+			list: []
 		}
 	}
 
@@ -123,13 +124,38 @@ class App extends Component {
 		});
 	}
 
+	getAndSortEvents = allMatches => {
+		let events =  allMatches.map(match => {
+			return {name: match.event.name, id: match.event.id}
+		})
+
+		events = _.uniqBy(events, 'name')
+		console.log(events)
+
+		return events.sort(function (a, b) {
+			return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+		});
+	}
+
 	renderOrMoreInfo = () => {
-		if (this.state.mode === 'live') {
+		const allMatches = this.reduceAllMatches()
+		const teams = this.getAndSortTeams(allMatches)
+		const events = this.getAndSortEvents(allMatches)
+
+		console.log(teams)
+		console.log(events)
+
+		if (this.state.render.category === 'live') {
 			console.log('live')
 		}
 
-		if (this.state.mode === 'schedule' || this.state.mode === 'results') {
-			console.log('not live')
+		if (this.state.render.category === 'schedule') {
+			if (this.state.render.option === 'teams') {
+				this.setState({list: teams})
+			}
+			if (this.state.render.option === 'events') {
+				this.setState({list: events})
+			}
 		}
 	}
 
@@ -137,6 +163,8 @@ class App extends Component {
 
 		const allMatches = this.reduceAllMatches()
 		const allTeams = this.getAndSortTeams(allMatches)
+		const allEvents = this.getEvents(allMatches)
+		console.log(allEvents)
 	
 		if (this.state.render.category === 'schedule') {
 			const tableObject = {
