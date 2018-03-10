@@ -8,6 +8,8 @@ import ImageGroupBackground from './header/image-group-background'
 import Button from './button/button'
 import DropDown from './dropdown/dropdown'
 import Table from './table/table'
+import ListSelect from './list-select/list-select'
+
 
 class App extends Component {
 
@@ -22,7 +24,8 @@ class App extends Component {
 			show: '',
 			schedule: [],
 			results: [],
-			live: []
+			live: [],
+			renderObject: null
 		}
 	}
 
@@ -30,9 +33,8 @@ class App extends Component {
 		axios.get(route)
 		.then(res => {
 			const key = category
-			const matches = res.data
+			const matches = res.data.matches
 			const matchesObj = {name,matches}
-				console.log(key)
 				this.setState({
 					[key]: [...this.state[key], matchesObj],
 					itemsReturned: this.state.itemsReturned + 1
@@ -89,36 +91,75 @@ class App extends Component {
 		this.setState({
 			render,
 			show: null
-		}, () => this.renderTable())
+		}, () => this.renderOrMoreInfo())
 	}
 
-	// renderTable = () => {
-	// 	console.log(this.state.render)
-	// 	if (this.state.render.category === 'schedule') {
+	reduceAllMatches = () => {
+		return this.state.schedule.reduce((acc, obj) => {
+			if (obj.name === 'allMatches') {
+				return acc = obj.matches;
+			} else {
+				return acc
+			}
+		},[])
+	}
 
-	// 		tableObject = {
-	// 			headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time'],
+	getAndSortTeams = allMatches => {
+		let teams = allMatches.reduce((acc, match) => {
+			if (!match.team1) {
+				return acc
+			}
+			if (!acc.includes(match.team1.name)) {
+				acc = [...acc, match.team1.name]
+			}
+			if (!acc.includes(match.team2.name)) {
+				acc = [...acc, match.team2.name]
+			} 
+			return acc;
+		}, [])
 
-	// 		}
-	// 	}
+		return teams.sort(function (a, b) {
+			return a.toLowerCase().localeCompare(b.toLowerCase());
+		});
+	}
 
-	// 	if (this.state.render.category === 'schedule') {
-	// 		tableObject = {
-	// 			headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
-	// 		}
-	// 	}
+	renderOrMoreInfo = () => {
+		if (this.state.mode === 'live') {
+			console.log('live')
+		}
 
-	// 	if (this.state.render.category === 'live') {
-	// 		tableObject = {
-	// 			headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
-	// 		}
-	// 	}
-	// }
+		if (this.state.mode === 'schedule' || this.state.mode === 'results') {
+			console.log('not live')
+		}
+	}
+
+	renderTable = () => {
+
+		const allMatches = this.reduceAllMatches()
+		const allTeams = this.getAndSortTeams(allMatches)
+	
+		if (this.state.render.category === 'schedule') {
+			const tableObject = {
+				headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time'],
+			}
+		}
+
+		// if (this.state.render.category === 'schedule') {
+		// 	tableObject = {
+		// 		headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+		// 	}
+		// }
+
+		// if (this.state.render.category === 'live') {
+		// 	tableObject = {
+		// 		headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+		// 	}
+		// }
+	}
 
 
 
 	render() {
-		console.log(this.state)
 
 		if (this.state.itemsReturned === 5) {
 
@@ -155,7 +196,7 @@ class App extends Component {
 								<DropDown
 									category='schedule'
 									reveal={this.state.show === 'schedule' ? true : false}
-									items={['top', 'teams', 'events', 'all']}
+									items={['top', 'teams', 'events', 'all - 24 hours']}
 									getOption={this.getRenderOption}
 								/>
 							</div>
@@ -171,13 +212,16 @@ class App extends Component {
 								<DropDown
 									category='results'
 									reveal={this.state.show === 'results' ? true : false}
-									items={['top', 'teams', 'events', 'all']}
+									items={['top', 'teams', 'events', 'all - 24 hours']}
 									getOption={this.getRenderOption}
 								/>
 							</div>
 						</div>
+						<div className='list-select-container'>
+							<ListSelect/>
+						</div>
 						<div className='table-container'>
-							<Table />
+							<Table renderObject={this.state.renderObject}/>
 						</div>
 					</main>
 				</div>
