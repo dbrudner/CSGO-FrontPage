@@ -63,7 +63,7 @@ body {
 
 .list-select{
     display: inline-grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: 30rem 30rem 30rem 30rem;
     list-style: none;
     margin-top: 3rem;
     color: rgb(43, 43, 116);
@@ -71,9 +71,33 @@ body {
 
 .list-item {
     cursor: pointer;
+    text-align: left;
+    margin-left: 7.5rem;
+    white-space: nowrap;
 }
 
-.list-item:hover {
+.list-select-long {
+    text-align: center;
+    display: inline-block;
+    list-style: none;
+    color: rgb(43, 43, 116);
+    margin-top: 3rem;
+}
+
+.long-list-item {
+    font-size: 1.9rem;
+    text-transform: uppercase;
+    margin-top: 1rem;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.list-item-highlight {
+    color: red;
+    font-weight: 700;
+}
+
+.list-item:hover, .long-list-item:hover {
     transform: scale(1.5);
     transition: .3s;
     color: red;

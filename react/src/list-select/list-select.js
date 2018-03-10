@@ -2,18 +2,28 @@ import React from 'react'
 
 export default function ListSelect(props) {
 
+    console.log(props.listItems)
+
     const renderList = () => {
         return props.listItems.map(item => {
-            return (
-                <li className='list-item-cntr' key={item}>
-                    <div className='list-item'>{item}</div>
-                </li>
-            )
+            if (props.highlight.includes(item)) {
+                return (
+                    <li onClick={props.getListItem(item)} className='list-item-cntr' key={item}>
+                        <div className='list-item list-item-highlight'>{item}</div>
+                    </li>
+                )
+            } else {
+                return (
+                    <li onClick={props.getListItem(item)} className={props.longText ? 'list-item-cntr-long' : 'list-item-cntr'} key={item}>
+                        <div className={props.longText ? 'long-list-item' : 'list-item'}>{item}</div>
+                    </li>
+                )
+            }
         })
     }
 
     return (
-        <ul className='list-select'>
+        <ul className={props.longText ? 'list-select-long' : 'list-select'}>
             {renderList()}
         </ul>
     )

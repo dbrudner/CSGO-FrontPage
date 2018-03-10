@@ -25,8 +25,11 @@ class App extends Component {
 			schedule: [],
 			results: [],
 			live: [],
-			renderObject: null,
-			listItems: []
+			render: {
+				option: null,
+				category: null
+			},
+			listItems: [],
 		}
 	}
 
@@ -125,18 +128,24 @@ class App extends Component {
 	}
 
 	getAndSortEvents = allMatches => {
-		let events =  allMatches.map(match => {
-			const parsedName = match.event.name.replace(/\s+/g, '-').toLowerCase()
-			const link = `https://www.hltv.org/events/${match.event.id}/${parsedName}`
+		// let events =  allMatches.map(match => {
+		// 	const parsedName = match.event.name.replace(/\s+/g, '-').toLowerCase()
+		// 	const link = `https://www.hltv.org/events/${match.event.id}/${parsedName}`
 
-			return {name: match.event.name, link}
-		})
-
-		events = _.uniqBy(events, 'name')
+		// 	return {name: match.event.name, link}
+		// })
+		console.log(allMatches)
+		let events = allMatches.reduce((acc, match) => {
+			if (!acc.includes(match.event.name)) {
+				return acc = [...acc, match.event.name]
+			} else {
+				return acc
+			}
+		}, [])
 		console.log(events)
-
+		
 		return events.sort(function (a, b) {
-			return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+			return a.toLowerCase().localeCompare(b.toLowerCase());
 		});
 	}
 
@@ -185,7 +194,9 @@ class App extends Component {
 		// }
 	}
 
-
+	getListItem = item => {
+		console.log(item)
+	}
 
 	render() {
 
@@ -252,7 +263,12 @@ class App extends Component {
 							</div>
 						</div>
 						<div className='list-select-container text-center'>
-							<ListSelect listItems={this.state.listItems}/>
+							<ListSelect 
+								listItems={this.state.listItems}
+								highlight={this.state.topTeams.slice(0, 10).map(team => {return team.name})}
+								getListItem={this.getListItem}
+								longText={this.state.render.option === 'events' ? true : false}
+							/>
 						</div>
 						<div className='table-container'>
 							<Table renderObject={this.state.renderObject}/>
