@@ -26,7 +26,7 @@ class App extends Component {
 			results: [],
 			live: [],
 			renderObject: null,
-			list: []
+			listItems: []
 		}
 	}
 
@@ -126,7 +126,10 @@ class App extends Component {
 
 	getAndSortEvents = allMatches => {
 		let events =  allMatches.map(match => {
-			return {name: match.event.name, id: match.event.id}
+			const parsedName = match.event.name.replace(/\s+/g, '-').toLowerCase()
+			const link = `https://www.hltv.org/events/${match.event.id}/${parsedName}`
+
+			return {name: match.event.name, link}
 		})
 
 		events = _.uniqBy(events, 'name')
@@ -142,19 +145,16 @@ class App extends Component {
 		const teams = this.getAndSortTeams(allMatches)
 		const events = this.getAndSortEvents(allMatches)
 
-		console.log(teams)
-		console.log(events)
-
 		if (this.state.render.category === 'live') {
 			console.log('live')
 		}
 
 		if (this.state.render.category === 'schedule') {
 			if (this.state.render.option === 'teams') {
-				this.setState({list: teams})
+				this.setState({listItems: teams})
 			}
 			if (this.state.render.option === 'events') {
-				this.setState({list: events})
+				this.setState({listItems: events})
 			}
 		}
 	}
@@ -246,7 +246,7 @@ class App extends Component {
 							</div>
 						</div>
 						<div className='list-select-container'>
-							<ListSelect/>
+							<ListSelect listItems={this.state.listItems}/>
 						</div>
 						<div className='table-container'>
 							<Table renderObject={this.state.renderObject}/>
