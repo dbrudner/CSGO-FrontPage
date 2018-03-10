@@ -82,9 +82,9 @@ class App extends Component {
 
 	setMode = mode => {
 		if (this.state.show !== mode) {
-			return this.setState({show: mode})
+			return this.setState({show: mode, listItems: []})
 		} else {
-			return this.setState({show: null})
+			return this.setState({show: null, listItems: []})
 		}
 	}
 
@@ -205,7 +205,7 @@ class App extends Component {
 						<div className='buttons'>
 							<div>
 								<Button
-									onClick={() => this.setMode('live')}
+									onClick={event => this.setMode('live')}
 									active={this.state.show === 'live' ? true : false}
 									btnClass='live'
 									btnText='live'
@@ -214,7 +214,10 @@ class App extends Component {
 							</div>
 							<div>
 								<Button
-									onClick={() => this.setMode('schedule')}
+									onClick={event => {
+										event.preventDefault()
+										this.setMode('schedule')
+									}}
 									dropDown
 									active={this.state.show === 'schedule' ? true : false}
 									btnClass='schedule'
@@ -230,7 +233,10 @@ class App extends Component {
 							</div>
 							<div>
 								<Button
-									onClick={() => this.setMode('results')}
+									onClick={event => {
+										event.preventDefault()
+										this.setMode('results')
+									}}
 									dropDown
 									active={this.state.show === 'results' ? true : false}
 									btnClass='results'

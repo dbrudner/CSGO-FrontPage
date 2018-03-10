@@ -54,18 +54,29 @@ body {
     color: black;
 }
 
-.list-item {
+.list-item-cntr {
     margin-right: 4rem;
-    font-size: 1.6rem;
+    font-size: 1.9rem;
     text-transform: uppercase;
+    margin-top: 1rem;
+}
+
+.list-select{
+    display: inline-grid;
+    grid-template-columns: auto auto auto auto;
+    list-style: none;
+    margin-top: 3rem;
+    color: rgb(43, 43, 116);
+}
+
+.list-item {
     cursor: pointer;
-    display: inline-block;
 }
 
 .list-item:hover {
-    transform: scale(1.3);
+    transform: scale(1.5);
     transition: .3s;
-    color: black;
+    color: red;
 }
 
 .header-container {
