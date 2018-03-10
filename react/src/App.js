@@ -196,6 +196,43 @@ class App extends Component {
 
 	getListItem = item => {
 		console.log(item)
+		console.log(this.state)
+
+		const category = this.state.render.category
+		const matches = this.state[category]
+
+		if (category === 'schedule') {
+			if (this.state.render.option === 'teams') {
+				const selectedMatches = matches.filter(match => {
+					if (match.team1 && match.team2) {
+						if (match.team1.name === item || match.team2.name === item) {
+							return match
+						}
+					}
+					
+				})
+				this.setState({selectedMatches})
+			}
+	
+			if (this.state.render.option === 'events') {
+				const selectedMatches = matches.filter(match => {
+					if (match.event) {
+						if (match.event.name === 'item') {
+							return match
+						}
+					}	
+				})
+	
+				const tableObject = {
+					selectedMatches,
+					headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+				}
+	
+				this.setState({tableObject})
+			}
+		}
+
+		
 	}
 
 	render() {
@@ -271,7 +308,7 @@ class App extends Component {
 							/>
 						</div>
 						<div className='table-container'>
-							<Table renderObject={this.state.renderObject}/>
+							<Table renderObject={this.state.tableObject}/>
 						</div>
 					</main>
 				</div>

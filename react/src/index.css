@@ -98,7 +98,7 @@ body {
 }
 
 .list-item:hover, .long-list-item:hover {
-    transform: scale(1.5);
+    transform: scale(1.3);
     transition: .3s;
     color: red;
 }
