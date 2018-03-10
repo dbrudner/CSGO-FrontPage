@@ -245,7 +245,7 @@ class App extends Component {
 								/>
 							</div>
 						</div>
-						<div className='list-select-container'>
+						<div className='list-select-container text-center'>
 							<ListSelect listItems={this.state.listItems}/>
 						</div>
 						<div className='table-container'>
