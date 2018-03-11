@@ -96,8 +96,14 @@ class App extends Component {
 		}
 
 		if (this.state.show !== mode) {
+			if (this.state.show === 'live') {
+				this.setState({tableObject: null})
+			}
 			return this.setState({show: mode, listItems: []})
 		} else {
+			if (this.state.show === 'live') {
+				this.setState({tableObject: null})
+			}
 			return this.setState({show: null, listItems: []})
 		}
 	}
