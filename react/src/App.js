@@ -16,6 +16,8 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 
+		this.scheduleHeaders = ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+
 		this.state = {
 			matches: [],
 			selectedMatches: [],
@@ -89,7 +91,7 @@ class App extends Component {
 		if (mode === 'live') {
 			this.setState({
 				tableObject: {
-					headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time'],
+					headers: this.scheduleHeaders,
 					selectedMatches: this.state.live[0].matches
 				}
 			})
@@ -178,6 +180,18 @@ class App extends Component {
 			if (this.state.render.option === 'events') {
 				this.setState({listItems: events})
 			}
+			if (this.state.render.option === 'top') {
+				const matches = this.state.schedule.filter(obj => {
+					return obj.name === 'upcomingTopMatches'
+				})
+
+				this.setState({
+					tableObject: {
+						headers: this.scheduleHeaders,
+						selectedMatches: matches[0].matches
+					}
+				})
+			}
 		}
 	}
 
@@ -208,7 +222,7 @@ class App extends Component {
 				// use this to render table
 				const tableObject = {
 					selectedMatches,
-					headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+					headers: this.scheduleHeaders
 				}
 				this.setState({tableObject})			
 			}
@@ -224,7 +238,7 @@ class App extends Component {
 	
 				const tableObject = {
 					selectedMatches,
-					headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+					headers: this.scheduleHeaders
 				}
 				this.setState({tableObject})	
 			}
