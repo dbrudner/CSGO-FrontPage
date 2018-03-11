@@ -8,15 +8,21 @@ export default function(props) {
     let team2imgUrl
     let team1name
     let team2name
+    let team1link
+    let team2link
 
     if (props.match.team1) {
-        team1imgUrl = `https://static.hltv.org/images/team/logo/${props.match.team1.id}`
+        const id = props.match.team1.id
+        team1imgUrl = `https://static.hltv.org/images/team/logo/${id}`
         team1name = props.match.team1.name
+        team1link = `https://www.hltv.org/stats/teams/${id}/${team1name}`
     }
 
     if (props.match.team2) {
+        const id = props.match.team2.id        
         team2imgUrl = `https://static.hltv.org/images/team/logo/${props.match.team2.id}`
         team2name = props.match.team2.name
+        team2link = `https://www.hltv.org/stats/teams/${id}/${team2name}`
     }
 
     // Convert time to user's timezone and format
@@ -40,8 +46,8 @@ export default function(props) {
         formattedTime = (moment(props.match.date).format("dddd, MMMM Do YYYY, h:mm:ss a"))
     }
 
-    let link = props.match.event.name.replace(/\s+/g, '-').toLowerCase()
-    link = `https://www.hltv.org/events/${props.match.event.id}/${link}`
+    let eventLink = props.match.event.name.replace(/\s+/g, '-').toLowerCase()
+    eventLink = `https://www.hltv.org/events/${props.match.event.id}/${eventLink}`
     
     //For Debugging
     const handleClick = () => {
@@ -70,14 +76,14 @@ export default function(props) {
         <tr className='trow' onClick={handleClick}>
             <td style={cell}>{timeUntil}</td>
             <td style={cell}>
-                {team1name || 'Unknown'}
+                <a className='team-link' href={team1link} target='_blank'>{team1name}</a>
                 <span><img src={team1imgUrl || 'https://seeklogo.com/images/C/Counter-Strike-logo-EAC70C9C3A-seeklogo.com.png'} style={imageStyle} /></span>
             </td>
             <td style={cell}>
-                {team2name || 'Unknown'}
+                <a className='team-link' href={team2link} target='_blank'>{team2name}</a>
                 <span><img src={team2imgUrl || 'https://seeklogo.com/images/C/Counter-Strike-logo-EAC70C9C3A-seeklogo.com.png'} style={imageStyle} /></span>
             </td>
-            <td style={cell}><a target="_blank" className='event-link' href={link}>{props.match.event.name}</a></td>
+            <td style={cell}><a target="_blank" className='event-link' href={eventLink}>{props.match.event.name}</a></td>
             <td style={cell}>{formattedTime}</td>
         </tr>
     )

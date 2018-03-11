@@ -17,6 +17,7 @@ class App extends Component {
 		super(props)
 
 		this.scheduleHeaders = ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+		this.resultsHeaders = ['Team 1', 'Team 2', 'Result', 'Format', 'Event']
 
 		this.state = {
 			matches: [],
@@ -62,8 +63,11 @@ class App extends Component {
 		this.getMatches('/topmatches/today', "todayTopMatches", 'schedule')
 		this.getMatches('/matches/all', "allMatches", 'schedule')
 		this.getMatches('/livematches', "liveMatches", 'live')
+		this.getMatches('/matches/today', 'todayMatches', 'schedule')
 		this.getTeams('/topteams', "topTeams")
 
+		axios.get('/results')
+		.then(res => console.log(res.data))
 
 
 		// This is seperate from the other requests because it's used to get all teams for teams select
@@ -169,6 +173,7 @@ class App extends Component {
 	}
 
 	renderOrMoreInfo = () => {
+		console.log(this.state.render.option)
 		const allMatches = this.reduceAllMatches()
 		const teams = this.getAndSortTeams(allMatches)
 		const events = this.getAndSortEvents(allMatches)
@@ -180,9 +185,23 @@ class App extends Component {
 			if (this.state.render.option === 'events') {
 				this.setState({listItems: events})
 			}
+
 			if (this.state.render.option === 'top') {
 				const matches = this.state.schedule.filter(obj => {
 					return obj.name === 'upcomingTopMatches'
+				})
+
+				this.setState({
+					tableObject: {
+						headers: this.scheduleHeaders,
+						selectedMatches: matches[0].matches
+					}
+				})
+			}
+
+			if (this.state.render.option == 'all - 24 hours') {
+				const matches = this.state.schedule.filter(obj => {
+					return obj.name === 'todayMatches'
 				})
 
 				this.setState({
@@ -251,7 +270,7 @@ class App extends Component {
 
 	render() {
 
-		if (this.state.itemsReturned === 5) {
+		if (this.state.itemsReturned === 6) {
 
 			const srcArray = this.state.topTeams.map(topTeam => `https://static.hltv.org/images/team/logo/${topTeam.id}`)
 
@@ -289,25 +308,6 @@ class App extends Component {
 								<DropDown
 									category='schedule'
 									reveal={this.state.show === 'schedule' ? true : false}
-									items={['top', 'teams', 'events', 'all - 24 hours']}
-									getOption={this.getRenderOption}
-								/>
-							</div>
-							<div>
-								<Button
-									onClick={event => {
-										event.preventDefault()
-										this.setMode('results')
-									}}
-									dropDown
-									active={this.state.show === 'results' ? true : false}
-									btnClass='results'
-									btnText='results'
-								/>
-
-								<DropDown
-									category='results'
-									reveal={this.state.show === 'results' ? true : false}
 									items={['top', 'teams', 'events', 'all - 24 hours']}
 									getOption={this.getRenderOption}
 								/>

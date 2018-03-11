@@ -249,14 +249,19 @@ tr:nth-child(even) {
     display: inline-block
 }
 
-.event-link {
+.event-link, .team-link {
     text-decoration: none;
     color: rgba(0, 2, 90, 0.719);
 }
 
-.event-link:hover {
+
+.event-link:hover, .team-link:hover {
     border-bottom: 2px solid rgba(0, 2, 90, 0.719);
     transition: .3s;
+}
+
+.team-link {
+    font-weight: 700;
 }
 
 .no-matches {
