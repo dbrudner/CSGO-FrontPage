@@ -70,6 +70,6 @@ module.exports = function(app) {
     }),
 
     app.get('*', (req, res) => {
-        res.sendFile(path.join(__dirname+'/react/public/index.html'))
+        res.sendFile(path.join(__dirname+'/react/build/index.html'))
     })
 };

@@ -7,7 +7,7 @@ var bodyParser   = require('body-parser');
 var path = require('path')
 
 
-app.use(express.static(path.join(__dirname, 'react/public')));
+app.use(express.static(path.join(__dirname, 'react/build')));
 
 
 
