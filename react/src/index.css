@@ -272,13 +272,17 @@ tr:nth-child(even) {
     color: black;
 }
 
-.event-cell, .time-cell {
+.cell {
     padding: 1rem;
     white-space: -o-pre-wrap; 
     word-wrap: break-word;
     white-space: pre-wrap; 
     white-space: -moz-pre-wrap;  
     white-space: -pre-wrap; 
+}
+
+.list-item-cntr-long, .list-item {
+    display: inline-block;
 }
 
 
@@ -317,6 +321,15 @@ tr:nth-child(even) {
 }
 
 @media screen and (max-width: 768px) {
+    .list-select {
+        grid-template-columns: auto;
+    }
+
+    .list-item {
+        text-align: center;
+        font-size: 3rem;
+    }
+
     table {
         table-layout: fixed;
         width: 100%;
