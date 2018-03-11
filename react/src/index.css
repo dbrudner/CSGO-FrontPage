@@ -114,7 +114,7 @@ body {
 
 .table-container {
     margin-left: 10vw;
-    width: 80vw;
+    width: 1rem;
 }
 
 table {
@@ -306,8 +306,36 @@ tr:nth-child(even) {
 }
 
 @media screen and (max-width: 768px) {
+    table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
     html {
         /* Defines 1rem */
         font-size: 5px;
+    }
+
+    .table-container {
+        margin: 0;
+        width: 100vw;
+    }
+
+    .trow td span {
+        display: block;
+        margin-left: -1rem;
+    }
+    
+    table tr td {
+        padding: 0;
+    }
+
+    .event-cell, .time-cell {
+        padding: 1rem;
+        white-space: -o-pre-wrap; 
+        word-wrap: break-word;
+        white-space: pre-wrap; 
+        white-space: -moz-pre-wrap;  
+        white-space: -pre-wrap; 
     }
 }

@@ -64,11 +64,6 @@ export default function(props) {
         height: '2.5rem',
         marginLeft: '1rem'
     }
-
-    const cell = {
-        whiteSpace: 'nowrap',
-        width: '1%'
-    }
     
    
     
@@ -78,17 +73,17 @@ export default function(props) {
 
     return (
         <tr className='trow' onClick={handleClick}>
-            <td style={cell}>{timeUntil}</td>
-            <td style={cell}>
+            <td className='cell'>{timeUntil}</td>
+            <td className='cell'>
                 <a className='team-link' href={team1link} target='_blank'>{team1name}</a>
                 <span><img src={team1imgUrl || 'https://seeklogo.com/images/C/Counter-Strike-logo-EAC70C9C3A-seeklogo.com.png'} style={imageStyle} /></span>
             </td>
-            <td style={cell}>
+            <td className='cell'>
                 <a className='team-link' href={team2link} target='_blank'>{team2name}</a>
                 <span><img src={team2imgUrl || 'https://seeklogo.com/images/C/Counter-Strike-logo-EAC70C9C3A-seeklogo.com.png'} style={imageStyle} /></span>
             </td>
-            <td style={cell}><a target="_blank" className='event-link' href={eventLink}>{props.match.event.name}</a></td>
-            <td style={cell}>{formattedTime}</td>
+            <td className='cell event-cell'><a target="_blank" className='event-link' href={eventLink}>{props.match.event.name}</a></td>
+            <td className='cell time-cell'>{formattedTime}</td>
         </tr>
     )
 }
