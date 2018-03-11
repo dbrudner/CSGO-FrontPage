@@ -18,7 +18,8 @@
   "devDependencies": {},
   "scripts": {
     "test": "mocha || true",
-    "start": "node index.js"
+    "start": "node index.js",
+    "heroku-postbuild": "cd client && yarn --production=false && yarn run build"
   },
   "keywords": [],
   "author": "",
