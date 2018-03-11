@@ -113,8 +113,10 @@ body {
 }
 
 .table-container {
-    margin-left: 10vw;
     width: 1rem;
+    display: block;
+    margin: 0 auto;
+    width: 80%;
 }
 
 table {
@@ -270,6 +272,15 @@ tr:nth-child(even) {
     color: black;
 }
 
+.event-cell, .time-cell {
+    padding: 1rem;
+    white-space: -o-pre-wrap; 
+    word-wrap: break-word;
+    white-space: pre-wrap; 
+    white-space: -moz-pre-wrap;  
+    white-space: -pre-wrap; 
+}
+
 
 @keyframes fadeInImage {
     0% {
@@ -317,8 +328,7 @@ tr:nth-child(even) {
     }
 
     .table-container {
-        margin: 0;
-        width: 100vw;
+        width: 90%;
     }
 
     .trow td span {
@@ -328,14 +338,5 @@ tr:nth-child(even) {
     
     table tr td {
         padding: 0;
-    }
-
-    .event-cell, .time-cell {
-        padding: 1rem;
-        white-space: -o-pre-wrap; 
-        word-wrap: break-word;
-        white-space: pre-wrap; 
-        white-space: -moz-pre-wrap;  
-        white-space: -pre-wrap; 
     }
 }
