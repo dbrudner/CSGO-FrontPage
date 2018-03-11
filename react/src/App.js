@@ -16,7 +16,7 @@ class App extends Component {
 	constructor(props) {
 		super(props)
 		const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
-		this.scheduleHeaders = ['Starting', 'Team 1', 'Team 2', 'Event', `Time (${timeZone})`]
+		this.scheduleHeaders = ['Starting', 'Team 1', 'Team 2', 'Event', `Time - (${timeZone})`]
 		this.resultsHeaders = ['Team 1', 'Team 2', 'Result', 'Format', 'Event']
 
 		this.state = {
@@ -40,7 +40,6 @@ class App extends Component {
 	getMatches = (route, name, category) => {
 		axios.get(route)
 		.then(res => {
-			console.log(res)
 			const key = category
 			const matches = res.data.matches
 			const matchesObj = {name,matches}
@@ -68,7 +67,6 @@ class App extends Component {
 			const upcomingMatches = res.data.upcomingMatches;
 			const nextDayMatches = res.data.nextDay;
 
-			console.log(res.data)
 			this.setState({events,liveMatches,upcomingMatches, nextDayMatches})
 		})
 	}
@@ -76,7 +74,6 @@ class App extends Component {
 	setMode = mode => {
 
 		if (mode === 'live') {
-			console.log(this.state.liveMatches)
 			this.setState({
 				tableObject: {
 					headers: this.scheduleHeaders,
@@ -127,7 +124,6 @@ class App extends Component {
 	}
 
 	getAndSortEvents = allMatches => {
-		console.log(allMatches)
 		let events = allMatches.reduce((acc, match) => {
 				if (match.event) {
 					if (!acc.includes(match.event.name)) {
@@ -168,10 +164,8 @@ class App extends Component {
 					if (!match.team1 || !match.team2) {
 						return false
 					}
-					console.log(match.team1.name)
 					return topTeamList.includes(match.team1.name) || topTeamList.includes(match.team2.name)
 				})
-				console.log(selectedMatches)
 
 				this.setState({
 					tableObject: {
