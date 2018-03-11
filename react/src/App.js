@@ -94,7 +94,7 @@ class App extends Component {
 			if (this.state.show === 'live') {
 				this.setState({tableObject: null})
 			}
-			return this.setState({show: null, listItems: []})
+			return this.setState({show: null, listItems: [], tableObject: null})
 		}
 	}
 
@@ -149,10 +149,10 @@ class App extends Component {
 
 		if (this.state.render.category === 'schedule') {
 			if (this.state.render.option === 'teams') {
-				this.setState({listItems: teams})
+				this.setState({listItems: teams, tableObject: null})
 			}
 			if (this.state.render.option === 'events') {
-				this.setState({listItems: events})
+				this.setState({listItems: events, tableObject: null})
 			}
 
 			if (this.state.render.option === 'top') {
@@ -181,7 +181,7 @@ class App extends Component {
 				})
 			}
 
-			if (this.state.render.option == '24 hours') {
+			if (this.state.render.option === '24 hours') {
 				this.setState({
 					tableObject: {
 						headers: this.scheduleHeaders,
@@ -257,7 +257,7 @@ class App extends Component {
 						<div className='arrayCntr'>
 							<ImageGroupBackground srcArray={srcArray} />
 						</div>
-						<Header/>
+						<Header alreadyLoaded/>
 					</div>
 					<main className='main'>
 						<div className='buttons'>
@@ -305,7 +305,11 @@ class App extends Component {
 				</div>
 			)
 		} else {
-			return <div/>
+			return (
+				<div className='header-container'>
+					<Header loading/>
+				</div>
+			)
 		}
 	}
 }
