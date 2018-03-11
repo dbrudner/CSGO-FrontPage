@@ -15,8 +15,8 @@ class App extends Component {
 
 	constructor(props) {
 		super(props)
-
-		this.scheduleHeaders = ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+		const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+		this.scheduleHeaders = ['Starting', 'Team 1', 'Team 2', 'Event', `Time (${timeZone})`]
 		this.resultsHeaders = ['Team 1', 'Team 2', 'Result', 'Format', 'Event']
 
 		this.state = {
