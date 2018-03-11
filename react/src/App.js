@@ -30,6 +30,7 @@ class App extends Component {
 				category: null
 			},
 			listItems: [],
+			tableObject: null
 		}
 	}
 
@@ -84,6 +85,16 @@ class App extends Component {
 	}
 
 	setMode = mode => {
+
+		if (mode === 'live') {
+			this.setState({
+				tableObject: {
+					headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time'],
+					selectedMatches: this.state.live[0].matches
+				}
+			})
+		}
+
 		if (this.state.show !== mode) {
 			return this.setState({show: mode, listItems: []})
 		} else {
@@ -109,6 +120,7 @@ class App extends Component {
 	}
 
 	getAndSortTeams = allMatches => {
+
 		let teams = allMatches.reduce((acc, match) => {
 			if (!match.team1) {
 				return acc
@@ -122,6 +134,7 @@ class App extends Component {
 			return acc;
 		}, [])
 
+
 		return teams.sort(function (a, b) {
 			return a.toLowerCase().localeCompare(b.toLowerCase());
 		});
@@ -134,7 +147,6 @@ class App extends Component {
 
 		// 	return {name: match.event.name, link}
 		// })
-		console.log(allMatches)
 		let events = allMatches.reduce((acc, match) => {
 			if (!acc.includes(match.event.name)) {
 				return acc = [...acc, match.event.name]
@@ -142,7 +154,6 @@ class App extends Component {
 				return acc
 			}
 		}, [])
-		console.log(events)
 		
 		return events.sort(function (a, b) {
 			return a.toLowerCase().localeCompare(b.toLowerCase());
@@ -153,10 +164,6 @@ class App extends Component {
 		const allMatches = this.reduceAllMatches()
 		const teams = this.getAndSortTeams(allMatches)
 		const events = this.getAndSortEvents(allMatches)
-
-		if (this.state.render.category === 'live') {
-			console.log('live')
-		}
 
 		if (this.state.render.category === 'schedule') {
 			if (this.state.render.option === 'teams') {
@@ -170,7 +177,7 @@ class App extends Component {
 
 	getListItem = item => {
 
-		this.setState({show: null, listItems: []})
+		this.setState({show: null, listItems: [], tableObject: null})
 		// Sets either 'live', 'schedule', or 'results'
 		const category = this.state.render.category
 
@@ -213,8 +220,11 @@ class App extends Component {
 					selectedMatches,
 					headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
 				}
-				this.setState({tableObject})
-				
+				this.setState({tableObject})	
+			}
+
+			if (this.state.render.option === 'top') {
+
 			}
 		}
 	}

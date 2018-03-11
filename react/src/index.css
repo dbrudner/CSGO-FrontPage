@@ -120,6 +120,7 @@ body {
 table {
     border-collapse: collapse;
     width: 100%;
+    margin-bottom: 5rem;
 }
 
 table tr td {
@@ -256,6 +257,12 @@ tr:nth-child(even) {
 .event-link:hover {
     border-bottom: 2px solid rgba(0, 2, 90, 0.719);
     transition: .3s;
+}
+
+.no-matches {
+    text-align: center;
+    font-size: 4rem;
+    text-transform: uppercase;
 }
 
 

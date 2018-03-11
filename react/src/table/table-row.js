@@ -39,6 +39,9 @@ export default function(props) {
         timeUntil = props.match.timeUntil
         formattedTime = (moment(props.match.date).format("dddd, MMMM Do YYYY, h:mm:ss a"))
     }
+
+    let link = props.match.event.name.replace(/\s+/g, '-').toLowerCase()
+    link = `https://www.hltv.org/events/${props.match.event.id}/${link}`
     
     //For Debugging
     const handleClick = () => {
@@ -74,7 +77,7 @@ export default function(props) {
                 {team2name || 'Unknown'}
                 <span><img src={team2imgUrl || 'https://seeklogo.com/images/C/Counter-Strike-logo-EAC70C9C3A-seeklogo.com.png'} style={imageStyle} /></span>
             </td>
-            <td style={cell}><a className='event-link' href={`https://static.hltv.org/images/team/logo/${props.match.event.id}`}>{props.match.event.name}</a></td>
+            <td style={cell}><a target="_blank" className='event-link' href={link}>{props.match.event.name}</a></td>
             <td style={cell}>{formattedTime}</td>
         </tr>
     )
