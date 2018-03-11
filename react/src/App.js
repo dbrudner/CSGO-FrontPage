@@ -168,56 +168,41 @@ class App extends Component {
 		}
 	}
 
-	renderTable = () => {
-
-		const allMatches = this.reduceAllMatches()
-		const allTeams = this.getAndSortTeams(allMatches)
-		const allEvents = this.getEvents(allMatches)
-		console.log(allEvents)
-	
-		if (this.state.render.category === 'schedule') {
-			const tableObject = {
-				headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time'],
-			}
-		}
-
-		// if (this.state.render.category === 'schedule') {
-		// 	tableObject = {
-		// 		headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
-		// 	}
-		// }
-
-		// if (this.state.render.category === 'live') {
-		// 	tableObject = {
-		// 		headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
-		// 	}
-		// }
-	}
-
 	getListItem = item => {
-		console.log(item)
-		console.log(this.state)
 
+		// Sets either 'live', 'schedule', or 'results'
 		const category = this.state.render.category
-		const matches = this.state[category]
+
+		// Get all matches that are live, upcoming (schedule), or results (finished)
+		let matches = this.state[category].filter(obj => obj.name === 'allMatches')
+		matches = matches[0].matches
 
 		if (category === 'schedule') {
 			if (this.state.render.option === 'teams') {
+
+				// Filter through matches and find matches with selected team
 				const selectedMatches = matches.filter(match => {
 					if (match.team1 && match.team2) {
+						
 						if (match.team1.name === item || match.team2.name === item) {
+							
 							return match
 						}
 					}
-					
 				})
-				this.setState({selectedMatches})
+
+				// use this to render table
+				const tableObject = {
+					selectedMatches,
+					headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
+				}
+				this.setState({tableObject})			
 			}
 	
 			if (this.state.render.option === 'events') {
 				const selectedMatches = matches.filter(match => {
 					if (match.event) {
-						if (match.event.name === 'item') {
+						if (match.event.name === item) {
 							return match
 						}
 					}	
@@ -227,12 +212,10 @@ class App extends Component {
 					selectedMatches,
 					headers: ['Starting', 'Team 1', 'Team 2', 'Event', 'Time']
 				}
-	
 				this.setState({tableObject})
+				
 			}
 		}
-
-		
 	}
 
 	render() {
@@ -308,7 +291,7 @@ class App extends Component {
 							/>
 						</div>
 						<div className='table-container'>
-							<Table renderObject={this.state.tableObject}/>
+							<Table tableObject={this.state.tableObject}/>
 						</div>
 					</main>
 				</div>
