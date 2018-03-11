@@ -118,39 +118,43 @@ body {
 }
 
 table {
-    border-collapse:separate;
-    border-spacing:5px 5px;
+    border-collapse: collapse;
+    width: 100%;
 }
 
 table tr td {
     text-align: center;
     font-size: 2rem;
     color: black;
-    padding-bottom: 2rem;
-    border-collapse:separate; 
-    border-spacing:5px 5px;
+    padding-bottom: 1.5rem;
     white-space: nowrap;
+    padding-top: 1.5rem;
 }
 
-table tr {
-    border-collapse:separate; 
-    border-spacing:5px 5px;
-    border-bottom: 1px solid black;    
-    
+table {
+    border: 1px solid black;
+    padding: 0;
 }
+
+table td, table th {
+    border: 1px solid #ddd;
+}
+
+table th {
+    background-color: black;
+    border: black;
+    color: #f3f3f3
+}
+
 
 table tr th {
     font-size: 2rem;
-    padding-bottom: 2rem;
-    border-collapse:separate; 
-    border-spacing:5px 5px;
 }
 
-.table-header {
-    border-bottom: 1px solid black;
-    border-collapse: separate;
-    border-spacing:5px 5px;
+tr:nth-child(even) {
+    background-color: #f2f2f2
 }
+
 
 .header-title {
     text-transform: uppercase;
