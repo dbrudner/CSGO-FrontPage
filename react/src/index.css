@@ -26,7 +26,7 @@ body {
 }
 
 .header {
-    background-image: linear-gradient(to right, rgb(231, 231, 231),rgb(128, 128, 128));
+    background-image: linear-gradient(to right, rgba(43, 43, 116, 0.712),rgb(128, 128, 128));
     background-size: cover;
     height: 50rem;
     width: 100vw;
