@@ -7,8 +7,10 @@ export default function TableHeader(props) {
     }
     
     return (
-        <tr>
-            {renderHeaders()}
-        </tr>
+        <thead>
+            <tr className='table-header'>
+                {renderHeaders()}
+            </tr>
+        </thead>
     )
 }

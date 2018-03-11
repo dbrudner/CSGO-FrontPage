@@ -170,6 +170,7 @@ class App extends Component {
 
 	getListItem = item => {
 
+		this.setState({show: null, listItems: []})
 		// Sets either 'live', 'schedule', or 'results'
 		const category = this.state.render.category
 

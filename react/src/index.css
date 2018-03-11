@@ -112,6 +112,46 @@ body {
     position: absolute;
 }
 
+.table-container {
+    margin-left: 10vw;
+    width: 80vw;
+}
+
+table {
+    border-collapse:separate;
+    border-spacing:5px 5px;
+}
+
+table tr td {
+    text-align: center;
+    font-size: 2rem;
+    color: black;
+    padding-bottom: 2rem;
+    border-collapse:separate; 
+    border-spacing:5px 5px;
+    white-space: nowrap;
+}
+
+table tr {
+    border-collapse:separate; 
+    border-spacing:5px 5px;
+    border-bottom: 1px solid black;    
+    
+}
+
+table tr th {
+    font-size: 2rem;
+    padding-bottom: 2rem;
+    border-collapse:separate; 
+    border-spacing:5px 5px;
+}
+
+.table-header {
+    border-bottom: 1px solid black;
+    border-collapse: separate;
+    border-spacing:5px 5px;
+}
+
 .header-title {
     text-transform: uppercase;
     letter-spacing: 5rem;
@@ -203,6 +243,17 @@ body {
 .schedule-container {
     display: inline-block
 }
+
+.event-link {
+    text-decoration: none;
+    color: rgba(0, 2, 90, 0.719);
+}
+
+.event-link:hover {
+    border-bottom: 2px solid rgba(0, 2, 90, 0.719);
+    transition: .3s;
+}
+
 
 @keyframes fadeInImage {
     0% {
