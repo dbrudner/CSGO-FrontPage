@@ -6,6 +6,35 @@ const time = require('./time-functions')
 
 module.exports = {
 
+    getAllObjects: function() {
+        return this.getAllMatches()
+        .then(res => {
+            return this.convertMatchTimes(res)
+        })
+        .then(matches => {
+            return this.addTimeUntil(matches)
+        })
+        .then(matches => {
+            let events = matches.map(match => {
+                return match.event
+            })
+
+            events = _.uniqBy(events, 'id')
+            return {events, matches}
+        })
+        .then(object => {
+            const liveMatches = object.matches.filter(match => {
+                return match.live
+            })
+
+            const upcomingMatches = object.matches.filter(match => {
+                return !match.live
+            })
+
+            const nextDay = this.nextDayOnly(object.matches)
+            return {...object, liveMatches, upcomingMatches, nextDay}
+        })
+    },
     // Returns all events
     // SCHEMA:
     // [{name: string, id: number}]
@@ -18,8 +47,8 @@ module.exports = {
             events = res.map(match => {
                 return match.event
             })
-            
-            events = _.uniqBy(events, 'id')                
+
+            events = _.uniqBy(events, 'id')
             return events
         })
     },
@@ -77,24 +106,19 @@ module.exports = {
     },
 
     // Get all matches where at least one team is a top 10 team
-    getTopMatches: function(topTeams) {
-
+    getTopMatches: function(topTeams, matches) {
         const topTeamList = topTeams.map(topTeam => {
             return topTeam.team.name
         })
 
-        return this.getUpcomingMatches().then(res => {
-            return res.filter(match => {
-
-                if (!match.team1 || !match.team2) {
-                    return false
-                }
-
-                return topTeamList.includes(match.team1.name) || topTeamList.includes(match.team2.name)
-            })
+        return matches.filter(match => {
+            if (!match.team1 || !match.team2) {
+                return false
+            }
+            return topTeamList.includes(match.team1.name) || topTeamList.includes(match.team2.name)
         })
     },
-    
+
     getMatchesStats: function(start, end) {
         return HLTV.getMatchesStats({startDate: start, endDate: end})
         .then((res) => {
@@ -108,9 +132,9 @@ module.exports = {
             }, onLogUpdate: (newData) => {
             },
             onDisconnect: () => {
-            }	
+            }
         })
-    }, 
+    },
 
     getTopTeams: function() {
         return HLTV.getTeamRanking().then(res => {
@@ -134,14 +158,14 @@ module.exports = {
         return this.getAllMatches()
         .then(res => {
             let matches = res;
-        
+
             events = res.map(match => {
                 return match.event
             })
-            
+
 
             events = _.uniqBy(events, 'id')
-            
+
             events.forEach(event => {
                 event.teams = []
             })
@@ -176,14 +200,14 @@ module.exports = {
                     topTeams.forEach(topTeam => {
                         if (topTeam.team.name === team) {
                             return value = topTeam.place
-                        } 
+                        }
                     })
 
                     return acc + value
                 }, 0)
                 event.quality = quality/event.teams.length
             })
-            return _.sortBy(events, 'quality')        
+            return _.sortBy(events, 'quality')
         })
     },
 
@@ -222,12 +246,18 @@ module.exports = {
     filterTopMatches: function(matches) {
         return this.getTopRankings()
         .then(topTeams => {
-            const topTeamsList = topTeams.map(topTeam => topTeam.team.name)
+            const topTeamsList = topTeams.map(topTeam => {
+                if (topTeam) {
+                    return topTeam.name
+                }
+            })
 
             return matches.filter(match => {
+                if (match.team1 && match.team2) {
                 return topTeamsList.includes(match.team1.name) || topTeamsList.includes(match.team2.name)
+                }
             })
-        })         
+        })
     },
 
     nextDayOnly: function(matches) {

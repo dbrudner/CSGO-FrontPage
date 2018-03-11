@@ -2,10 +2,7 @@ import React from 'react'
 import TableHeader from './table-header'
 import TableBody from './table-body'
 
-export default function Table(props) {
-    console.log(props)
-
-    
+export default function Table(props) {    
 
     if (props.tableObject) {
         if (!props.tableObject.selectedMatches) {

@@ -10,6 +10,7 @@ export default function(props) {
     let team2name
     let team1link
     let team2link
+    let eventLink
 
     if (props.match.team1) {
         const id = props.match.team1.id
@@ -46,8 +47,11 @@ export default function(props) {
         formattedTime = (moment(props.match.date).format("dddd, MMMM Do YYYY, h:mm:ss a"))
     }
 
-    let eventLink = props.match.event.name.replace(/\s+/g, '-').toLowerCase()
-    eventLink = `https://www.hltv.org/events/${props.match.event.id}/${eventLink}`
+    if (props.match.event) {
+        eventLink = props.match.event.name.replace(/\s+/g, '-').toLowerCase()
+        eventLink = `https://www.hltv.org/events/${props.match.event.id}/${eventLink}`
+    }
+    
     
     //For Debugging
     const handleClick = () => {
@@ -56,9 +60,9 @@ export default function(props) {
 
     // S T Y L E B O Y Z
     const imageStyle = {
-        width: '25px',
-        height: '25px',
-        marginLeft: '10px'
+        width: '2.5rem',
+        height: '2.5rem',
+        marginLeft: '1rem'
     }
 
     const cell = {

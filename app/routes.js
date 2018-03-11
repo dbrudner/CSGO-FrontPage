@@ -63,13 +63,13 @@ module.exports = function(app) {
 
     app.get('/topteams', (req, res) => {
         hltv.getAllTopTeams().then(teams => res.json(teams))
-    })
+    }),
 
-    app.get('/results', (req, res) => {
-        hltv.getResults().then(results => res.json(results))
-    })
+    app.get('/all', (req, res) => {
+        hltv.getAllObjects().then(all => res.json(all))
+    }),
 
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname+'/react/build/index.html'))
-    });
+    })
 };

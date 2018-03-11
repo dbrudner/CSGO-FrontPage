@@ -40,6 +40,7 @@ class App extends Component {
 	getMatches = (route, name, category) => {
 		axios.get(route)
 		.then(res => {
+			console.log(res)
 			const key = category
 			const matches = res.data.matches
 			const matchesObj = {name,matches}
@@ -59,44 +60,27 @@ class App extends Component {
 
 	componentDidMount() {
 
-		this.getMatches('/topmatches/all', "upcomingTopMatches", 'schedule')
-		this.getMatches('/topmatches/today', "todayTopMatches", 'schedule')
-		this.getMatches('/matches/all', "allMatches", 'schedule')
-		this.getMatches('/livematches', "liveMatches", 'live')
-		this.getMatches('/matches/today', 'todayMatches', 'schedule')
 		this.getTeams('/topteams', "topTeams")
+		axios.get('/all')
+		.then(res => {
+			const events = res.data.events;
+			const liveMatches = res.data.liveMatches;
+			const upcomingMatches = res.data.upcomingMatches;
+			const nextDayMatches = res.data.nextDay;
 
-		axios.get('/results')
-		.then(res => console.log(res.data))
-
-
-		// This is seperate from the other requests because it's used to get all teams for teams select
-		// axios.get('/matches/all')
-		// .then(matches => {
-		// 	const matchesObject = {name: 'All Matches', matches: matches.data.matches}
-		// 	let teams = matches.data.matches.reduce((acc, match) => {return acc = [...acc, match.team1, match.team2]}, [])
-		// 	teams = _.uniqBy(teams, 'name')
-
-		// 	let events = matches.data.matches.reduce((acc, match) => {
-		// 		if (match.event && !acc.includes(match.event.name)) {
-		// 			return acc = [...acc, match.event.name]
-		// 		} else {
-		// 			return acc
-		// 		}
-		// 	}, [])
-
-
-		// 	this.setState({matches: [...this.state.matches, matchesObject], teams, events})
-		// })
+			console.log(res.data)
+			this.setState({events,liveMatches,upcomingMatches, nextDayMatches})
+		})
 	}
 
 	setMode = mode => {
 
 		if (mode === 'live') {
+			console.log(this.state.liveMatches)
 			this.setState({
 				tableObject: {
 					headers: this.scheduleHeaders,
-					selectedMatches: this.state.live[0].matches
+					selectedMatches: this.state.liveMatches
 				}
 			})
 		}
@@ -121,16 +105,6 @@ class App extends Component {
 		}, () => this.renderOrMoreInfo())
 	}
 
-	reduceAllMatches = () => {
-		return this.state.schedule.reduce((acc, obj) => {
-			if (obj.name === 'allMatches') {
-				return acc = obj.matches;
-			} else {
-				return acc
-			}
-		},[])
-	}
-
 	getAndSortTeams = allMatches => {
 
 		let teams = allMatches.reduce((acc, match) => {
@@ -153,18 +127,14 @@ class App extends Component {
 	}
 
 	getAndSortEvents = allMatches => {
-		// let events =  allMatches.map(match => {
-		// 	const parsedName = match.event.name.replace(/\s+/g, '-').toLowerCase()
-		// 	const link = `https://www.hltv.org/events/${match.event.id}/${parsedName}`
-
-		// 	return {name: match.event.name, link}
-		// })
+		console.log(allMatches)
 		let events = allMatches.reduce((acc, match) => {
-			if (!acc.includes(match.event.name)) {
-				return acc = [...acc, match.event.name]
-			} else {
-				return acc
-			}
+				if (match.event) {
+					if (!acc.includes(match.event.name)) {
+						return acc = [...acc, match.event.name]
+					} 
+				}
+				return acc;
 		}, [])
 		
 		return events.sort(function (a, b) {
@@ -173,8 +143,7 @@ class App extends Component {
 	}
 
 	renderOrMoreInfo = () => {
-		console.log(this.state.render.option)
-		const allMatches = this.reduceAllMatches()
+		const allMatches = this.state.upcomingMatches
 		const teams = this.getAndSortTeams(allMatches)
 		const events = this.getAndSortEvents(allMatches)
 
@@ -187,27 +156,36 @@ class App extends Component {
 			}
 
 			if (this.state.render.option === 'top') {
-				const matches = this.state.schedule.filter(obj => {
-					return obj.name === 'upcomingTopMatches'
+
+				let topTeamList = this.state.topTeams.map(topTeam => {
+					return topTeam.name
 				})
+
+				topTeamList = topTeamList.slice(0, 10)
+				
+
+				const selectedMatches = this.state.upcomingMatches.filter(match => {
+					if (!match.team1 || !match.team2) {
+						return false
+					}
+					console.log(match.team1.name)
+					return topTeamList.includes(match.team1.name) || topTeamList.includes(match.team2.name)
+				})
+				console.log(selectedMatches)
 
 				this.setState({
 					tableObject: {
 						headers: this.scheduleHeaders,
-						selectedMatches: matches[0].matches
+						selectedMatches
 					}
 				})
 			}
 
-			if (this.state.render.option == 'all - 24 hours') {
-				const matches = this.state.schedule.filter(obj => {
-					return obj.name === 'todayMatches'
-				})
-
+			if (this.state.render.option == '24 hours') {
 				this.setState({
 					tableObject: {
 						headers: this.scheduleHeaders,
-						selectedMatches: matches[0].matches
+						selectedMatches: this.state.nextDayMatches
 					}
 				})
 			}
@@ -221,8 +199,7 @@ class App extends Component {
 		const category = this.state.render.category
 
 		// Get all matches that are live, upcoming (schedule), or results (finished)
-		let matches = this.state[category].filter(obj => obj.name === 'allMatches')
-		matches = matches[0].matches
+		const matches = this.state.upcomingMatches
 
 		if (category === 'schedule') {
 			if (this.state.render.option === 'teams') {
@@ -270,7 +247,7 @@ class App extends Component {
 
 	render() {
 
-		if (this.state.itemsReturned === 6) {
+		if (this.state.events && this.state.topTeams) {
 
 			const srcArray = this.state.topTeams.map(topTeam => `https://static.hltv.org/images/team/logo/${topTeam.id}`)
 
@@ -308,7 +285,7 @@ class App extends Component {
 								<DropDown
 									category='schedule'
 									reveal={this.state.show === 'schedule' ? true : false}
-									items={['top', 'teams', 'events', 'all - 24 hours']}
+									items={['top', 'teams', 'events', '24 hours']}
 									getOption={this.getRenderOption}
 								/>
 							</div>
