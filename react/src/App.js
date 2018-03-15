@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import _ from 'lodash'
+import socketIOClient from 'socket.io-client'
 
 import Header from './header/header'
 import ImageGroupBackground from './header/image-group-background'
@@ -33,8 +34,15 @@ class App extends Component {
 				category: null
 			},
 			listItems: [],
-			tableObject: null
+			tableObject: null,
+			endpoint: "http://localhost:5000"
 		}
+	}
+
+	send = () => {
+		const socket = socketIOClient(this.state.endpoint)
+
+		socket.emit('change color', 'red')
 	}
 
 	getMatches = (route, name, category) => {
@@ -60,6 +68,7 @@ class App extends Component {
 	componentDidMount() {
 
 		this.getTeams('/topteams', "topTeams")
+		
 		axios.get('/all')
 		.then(res => {
 			const events = res.data.events;
@@ -240,6 +249,13 @@ class App extends Component {
 	}
 
 	render() {
+
+		const socket = socketIOClient(this.state.endpoint)
+
+		socket.on('change color', (color) => {
+			// setting the color of our button
+			document.body.style.backgroundColor = color
+		  })
 
 		if (this.state.events && this.state.topTeams) {
 
