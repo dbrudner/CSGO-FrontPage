@@ -11,6 +11,8 @@ import DropDown from './dropdown/dropdown'
 import Table from './table/table'
 import ListSelect from './list-select/list-select'
 
+import notify from './notifications'
+
 
 class App extends Component {
 
@@ -68,6 +70,7 @@ class App extends Component {
 	componentDidMount() {
 
 		this.getTeams('/topteams', "topTeams")
+
 		
 		axios.get('/all')
 		.then(res => {
@@ -250,12 +253,12 @@ class App extends Component {
 
 	render() {
 
-		const socket = socketIOClient(this.state.endpoint)
+		// const socket = socketIOClient(this.state.endpoint)
 
-		socket.on('change color', (color) => {
-			// setting the color of our button
-			document.body.style.backgroundColor = color
-		  })
+		// socket.on('change color', (color) => {
+		// 	// setting the color of our button
+		// 	document.body.style.backgroundColor = color
+		//   })
 
 		if (this.state.events && this.state.topTeams) {
 

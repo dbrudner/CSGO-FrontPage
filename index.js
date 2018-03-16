@@ -21,6 +21,12 @@ app.use(express.static(path.join(__dirname, 'react/build')));
 // routes ======================================================================h
 require('./app/routes.js')(app); // load our routes and pass in our app and fully configured passport
 
+// this route retrieves server port. Used for socket io deployment
+
+app.get('/connection', (req, res) => {
+    res.json('hey');
+}),
+
 // socket io connection ======================================================================h
 
 io.on('connection', socket => {
@@ -33,5 +39,3 @@ io.on('connection', socket => {
 
 // launch ======================================================================
 server.listen(port, () => console.log(`Listening on port ${port}`))
-
-console.log('Listening on port ' + port);
