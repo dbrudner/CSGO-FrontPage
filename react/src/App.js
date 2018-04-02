@@ -68,10 +68,8 @@ class App extends Component {
 		
 		axios.get('/all')
 		.then(res => {
-			const events = res.data.events;
-			const liveMatches = res.data.liveMatches;
-			const upcomingMatches = res.data.upcomingMatches;
-			const nextDayMatches = res.data.nextDay;
+
+			const {events, liveMatches, upcomingMatches, nextDayMatches} = res.data
 
 			this.setState({events,liveMatches,upcomingMatches, nextDayMatches})
 		})
