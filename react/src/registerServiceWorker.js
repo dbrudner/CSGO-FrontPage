@@ -1,3 +1,5 @@
+import Push from 'push.js'
+
 // In production, we register a service worker to serve assets from local cache.
 
 // This lets the app load faster on subsequent visits in production, and gives
@@ -19,6 +21,13 @@ const isLocalhost = Boolean(
 );
 
 export default function register() {
+
+  if ('serviceWorker' in navigator) {
+    console.log('hey')
+    Push.create('hey')    
+  }
+  
+
   if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
     // The URL constructor is available in all browsers that support SW.
     const publicUrl = new URL(process.env.PUBLIC_URL, window.location);

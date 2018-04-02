@@ -13,7 +13,7 @@
     "socket.io": "^2.0.4"
   },
   "scripts": {
-    "start": "react-scripts build && cra-append-sw --mode replace ./custom-sw",
+    "start": "react-scripts start",
     "build": "react-scripts build && cra-append-sw ./custom-sw",
     
     "test": "react-scripts test --env=jsdom",

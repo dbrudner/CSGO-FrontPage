@@ -41,12 +41,6 @@ class App extends Component {
 		}
 	}
 
-	send = () => {
-		const socket = socketIOClient(this.state.endpoint)
-
-		socket.emit('change color', 'red')
-	}
-
 	getMatches = (route, name, category) => {
 		axios.get(route)
 		.then(res => {
@@ -252,13 +246,6 @@ class App extends Component {
 	}
 
 	render() {
-
-		// const socket = socketIOClient(this.state.endpoint)
-
-		// socket.on('change color', (color) => {
-		// 	// setting the color of our button
-		// 	document.body.style.backgroundColor = color
-		//   })
 
 		if (this.state.events && this.state.topTeams) {
 
